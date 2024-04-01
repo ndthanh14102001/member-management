@@ -18,6 +18,6 @@ public class Member_Management {
         member.setKhoa("Nguyen van teo");
         member.setNganh("123");
         member.setSdt("032681173");
-        new DAO_Example().testCreateMember(member);
+        new DAO_Example().testJoin();
     }
 }

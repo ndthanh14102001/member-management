@@ -33,10 +33,16 @@ public class DAO_Example {
 
     public void testJoin() {
         try {
-            List<Object> results = session.createQuery("FROM _Processing p JOIN p.maTV").getResultList();
-            for (Object result : results) {
-                Entity._Processing member = (Entity._Processing) result;
-                System.out.println("Name: " + member.getMaTV().getHoTen());
+            String jpql = "SELECT m, CASE WHEN COUNT(p) > 0 AND SUM(CASE WHEN p.trangThaiXL = 0 THEN 1 ELSE 0 END) > 0 THEN 'Chưa xử lý' ELSE '' END "
+                    + "FROM _Member m LEFT JOIN m.processings p "
+                    + "GROUP BY m";
+            Query<Object[]> query = session.createQuery(jpql, Object[].class);
+            List<Object[]> results = query.getResultList();
+
+            for (Object[] result : results) {
+                _Member member = (_Member) result[0];
+                String status = (String) result[1];
+                System.out.println("Member: " + member.getHoTen() + ", Status: " + status);
             }
         } catch (Exception e) {
             e.printStackTrace();

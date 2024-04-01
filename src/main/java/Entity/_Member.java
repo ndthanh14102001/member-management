@@ -5,6 +5,7 @@
 package Entity;
 
 import jakarta.persistence.Basic;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,8 +13,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -45,6 +48,9 @@ public class _Member implements Serializable {
     private String nganh;
     @Column(name = "SDT")
     private String sdt;
+    
+    @OneToMany(mappedBy = "maTV", cascade = CascadeType.ALL)
+    private List<_Processing> processings;
 
     public _Member() {
     }
@@ -98,6 +104,14 @@ public class _Member implements Serializable {
         this.sdt = sdt;
     }
 
+    public List<_Processing> getProcessings() {
+        return processings;
+    }
+
+    public void setProcessings(List<_Processing> processings) {
+        this.processings = processings;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -122,5 +136,5 @@ public class _Member implements Serializable {
     public String toString() {
         return "Entity._Member[ maTV=" + maTV + " ]";
     }
-    
+
 }
