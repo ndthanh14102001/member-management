@@ -20,19 +20,26 @@ public class BUS_Member {
         this.memberDAO = new DAO_Member();
     }
 
-    public List<_Member> getAllMembers() {
+    public List<Object[]> getAllMembers() {
         return memberDAO.getAllMembers();
     }
+//Example
+//     List<Object[]> results = new BUS_Member().getAllMembers();
+//        for (Object[] result : results) {
+//            _Member mebmer = (_Member) result[0];
+//            String trangThai = (String) result[1];
+//            System.out.println(mebmer.getMaTV() + " " + trangThai);
+//        }
 
-    public List<_Member> getMembersById(int memberId) {
+    public List<Object[]> getMembersById(int memberId) {
         return memberDAO.getMembersById(memberId);
     }
 
-    public List<_Member> getMembersByDepartment(String department) {
+    public List<Object[]> getMembersByDepartment(String department) {
         return memberDAO.getMembersByDepartment(department);
     }
 
-    public List<_Member> getMembersByMajors(String majors) {
+    public List<Object[]> getMembersByMajors(String majors) {
         return memberDAO.getMembersByMajors(majors);
     }
 
