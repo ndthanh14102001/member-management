@@ -1,4 +1,6 @@
 GUI\GUI_Member.class
+DAO\DAO_Processing.class
+DAO\DAO_Member.class
 BUS\BUS_Processing.class
 Entity\_Device.class
 com\mycompany\member_management\Member_Management.class
@@ -7,6 +9,7 @@ Entity\_Processing.class
 DAO\DAO_Example.class
 Entity\_UsageInformation.class
 Entity\_Member.class
+DAO\DAO_UsageInformation.class
 DAO\ConnectDB.class
 GUI\GUI_Member$1.class
 BUS\BUS_Member.class
