@@ -18,7 +18,7 @@ public class DAO_Device {
     private List<_Device> results;
     private _Device device;
     private SessionFactory factory;
-    Session session;
+    private Session session;
 
     public DAO_Device() {
         factory = new ConnectDB().getFactory();
