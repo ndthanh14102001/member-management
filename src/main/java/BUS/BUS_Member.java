@@ -4,65 +4,56 @@
  */
 package BUS;
 
-import java.io.IOException;
-import java.sql.SQLException;
+import DAO.DAO_Member;
+import Entity._Member;
 import java.util.List;
+
 /**
  *
  * @author Admin
  */
 public class BUS_Member {
-    private MemberDAO memberDAO;
-    
+
+    private DAO_Member memberDAO;
+
     public BUS_Member() {
-        this.memberDAO = new MemberDAO();
+        this.memberDAO = new DAO_Member();
     }
-    
-    //Thêm 1 thành viên
-    public void addMember(MemberDTO member) throws SQLException {
-        memberDAO.addMember(member);
+
+    public List<_Member> getAllMembers() {
+        return memberDAO.getAllMembers();
     }
-    
-    //Thêm danh sách thành viên từ tệp Excel vào hệ thống
-    public void addMembersFromExcel(String filePath) throws IOException, SQLException {
-        List<MemberDTO> members = ExcelReader.readMembersFromExcel(filePath);
-        for (MemberDTO member : members) {
-            memberDAO.addMember(member);
-        }
+
+    public List<_Member> getMembersById(int memberId) {
+        return memberDAO.getMembersById(memberId);
     }
-    
-    //Xóa 1 thành viên dựa trên ID
-    public void deleteMember(int memberId) throws SQLException {
-        memberDAO.deleteMember(memberId);
+
+    public List<_Member> getMembersByDepartment(String department) {
+        return memberDAO.getMembersByDepartment(department);
     }
-    
-    //Xóa nhiều thành viên theo điều kiện
-    public void deleteMembersByCondition(String condition) throws SQLException {
-        memberDAO.deleteMembersByCondition(condition);
+
+    public List<_Member> getMembersByMajors(String majors) {
+        return memberDAO.getMembersByMajors(majors);
     }
-    
-    //Sửa thông tin thành viên
-    public void updateMember(int memberId, MemberDTO newMember) throws SQLException {
-        memberDAO.updateMember(memberId, newMember);
+
+    public boolean addMember(_Member member) {
+        return memberDAO.addMember(member);
     }
-    
-    //Vào khu vực học tập
-    public void enterStudyArea(int memberId) {
-        // Code to enter study area
+
+    public boolean addMembers(List<_Member> members) {
+        return memberDAO.addMembers(members);
     }
-    
-    //Mượn thiết bị
-    public void borrowEquipment(int memberId, String equipment) {
-        // Code to borrow equipment
+
+    public boolean updateMember(int memberId, _Member memberInfo) {
+        memberInfo.setMaTV(memberId);
+        return memberDAO.updateMember(memberInfo);
     }
-    
-    //Trả thiết bị
-    public void returnEquipment(int memberId, String equipment) {
-        // Code to return equipment
+
+    public boolean deleteMember(int memberId) {
+        return memberDAO.deleteMember(memberId);
     }
-    
-    //Cảnh báo vi phạm
-    public void alertViolation(int memberId) {
-        // Code to alert violation
+
+    public boolean deleteMembers(List<Integer> memberIds) {
+        return memberDAO.deleteMembers(memberIds);
     }
 }

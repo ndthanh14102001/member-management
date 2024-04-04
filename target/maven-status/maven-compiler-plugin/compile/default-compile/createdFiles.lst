@@ -1,4 +1,5 @@
 GUI\GUI_Member.class
+DAO\DAO_Member.class
 BUS\BUS_Processing.class
 Entity\_Device.class
 com\mycompany\member_management\Member_Management.class

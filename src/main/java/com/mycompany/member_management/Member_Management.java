@@ -3,8 +3,9 @@
  */
 package com.mycompany.member_management;
 
-import DAO.DAO_Example;
+import BUS.BUS_Member;
 import Entity._Member;
+import java.util.List;
 
 /**
  *
@@ -13,11 +14,9 @@ import Entity._Member;
 public class Member_Management {
 
     public static void main(String[] args) {
-        _Member member = new _Member();
-        member.setHoTen("Nguyen van teo");
-        member.setKhoa("Nguyen van teo");
-        member.setNganh("123");
-        member.setSdt("032681173");
-        new DAO_Example().testCreateMember(member);
+        List<_Member> members = new BUS_Member().getAllMembers();
+        for (_Member member : members) {
+            System.out.print(member);
+        }
     }
 }
