@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\Entity\_Member.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\BUS\BUS_Member.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\Entity\_Device.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\DAO\DAO_Example.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\BUS\BUS_Processing.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\BUS\BUS_UsageInformation.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\Entity\_UsageInformation.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\Entity\_Processing.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\GUI\Statistics.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\GUI\GUI_Member.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\BUS\BUS_Device.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\DAO\ConnectDB.java
+D:\DATA\HK2_Nam_4\MHPL\Project 2\member-management\src\main\java\com\mycompany\member_management\Member_Management.java
+=======
 C:\Users\Admin\Downloads\University\mohinhphanlop\Project2\member-management\src\main\java\Entity\_Processing.java
 C:\Users\Admin\Downloads\University\mohinhphanlop\Project2\member-management\src\main\java\com\mycompany\member_management\Member_Management.java
 C:\Users\Admin\Downloads\University\mohinhphanlop\Project2\member-management\src\main\java\DAO\DAO_Processing.java
@@ -13,3 +28,4 @@ C:\Users\Admin\Downloads\University\mohinhphanlop\Project2\member-management\src
 C:\Users\Admin\Downloads\University\mohinhphanlop\Project2\member-management\src\main\java\GUI\GUI_Member.java
 C:\Users\Admin\Downloads\University\mohinhphanlop\Project2\member-management\src\main\java\Entity\_UsageInformation.java
 C:\Users\Admin\Downloads\University\mohinhphanlop\Project2\member-management\src\main\java\DAO\DAO_Member.java
+>>>>>>> bafcf668fae842fe134279e9d09b81967e00c73a
