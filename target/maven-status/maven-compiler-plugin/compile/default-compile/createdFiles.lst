@@ -1,6 +1,7 @@
 GUI\GUI_Member.class
 BUS\BUS_Processing.class
 Entity\_Device.class
+GUI\Statistics$1.class
 com\mycompany\member_management\Member_Management.class
 BUS\BUS_UsageInformation.class
 Entity\_Processing.class
@@ -11,3 +12,4 @@ DAO\ConnectDB.class
 GUI\GUI_Member$1.class
 BUS\BUS_Member.class
 BUS\BUS_Device.class
+GUI\Statistics.class
