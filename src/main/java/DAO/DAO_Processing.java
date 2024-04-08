@@ -28,7 +28,7 @@ public class DAO_Processing {
         try {
             List<Object> results = session.createQuery("FROM _Processing p JOIN p.maTV").getResultList();
             return results;
-        } catch (Exception e) {
+        } catch (Exception e) { 
             System.err.println(e);
         } finally {
             session.close();
