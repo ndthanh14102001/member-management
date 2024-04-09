@@ -38,7 +38,7 @@ public class _Member implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "MaTV")
-    private Integer maTV;
+    private String maTV;
     @Basic(optional = false)
     @Column(name = "HoTen")
     private String hoTen;
@@ -55,20 +55,20 @@ public class _Member implements Serializable {
     public _Member() {
     }
 
-    public _Member(Integer maTV) {
+    public _Member(String maTV) {
         this.maTV = maTV;
     }
 
-    public _Member(Integer maTV, String hoTen) {
+    public _Member(String maTV, String hoTen) {
         this.maTV = maTV;
         this.hoTen = hoTen;
     }
 
-    public Integer getMaTV() {
+    public String getMaTV() {
         return maTV;
     }
 
-    public void setMaTV(Integer maTV) {
+    public void setMaTV(String maTV) {
         this.maTV = maTV;
     }
 
