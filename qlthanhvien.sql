@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2024 at 01:06 PM
+-- Generation Time: Apr 09, 2024 at 12:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -27,8 +27,9 @@ USE `qlthanhvien`;
 --
 -- Table structure for table `thanhvien`
 --
+
 CREATE TABLE `thanhvien` (
-  `MaTV` int(10) NOT NULL,
+  `MaTV` varchar(100) NOT NULL,
   `HoTen` varchar(100) NOT NULL,
   `Khoa` varchar(100) DEFAULT NULL,
   `Nganh` varchar(100) DEFAULT NULL,
@@ -40,10 +41,11 @@ CREATE TABLE `thanhvien` (
 --
 
 INSERT INTO `thanhvien` (`MaTV`, `HoTen`, `Khoa`, `Nganh`, `SDT`) VALUES
-(1120150184, 'Trần Thị Nữ', 'GDTH', 'GDTH', '1111111111'),
-(1121530087, 'Trần Thiếu Nam', 'TLH', 'QLGD', '1111111112'),
-(1123330257, 'Ngô Tuyết Nhi', 'QTKD', 'QTKD', '1111111113'),
-(1123330258, 'Nguyễn Văn Nam', 'CNTT', 'HTTT', '123456789');
+('1120150184', 'Trần Thị Nữ', 'GDTH', 'GDTH', '1111111111'),
+('1121530087', 'Trần Thiếu Nam', 'TLH', 'QLGD', '1111111112'),
+('1123330257', 'Ngô Tuyết Nhi', 'QTKD', 'QTKD', '1111111113'),
+('1123330258', 'Nguyễn Văn Nam', 'CNTT', 'HTTT', '123456789'),
+('1123330261', 'Nguyen van c', 'CNTT', 'CNTT', '01234589');
 
 -- --------------------------------------------------------
 
@@ -74,7 +76,7 @@ INSERT INTO `thietbi` (`MaTB`, `TenTB`, `MoTaTB`) VALUES
 
 CREATE TABLE `thongtinsd` (
   `MaTT` int(10) NOT NULL,
-  `MaTV` int(10) NOT NULL,
+  `MaTV` varchar(100) NOT NULL,
   `MaTB` int(10) DEFAULT NULL,
   `TGVao` datetime DEFAULT NULL,
   `TGMuon` datetime DEFAULT NULL,
@@ -86,8 +88,8 @@ CREATE TABLE `thongtinsd` (
 --
 
 INSERT INTO `thongtinsd` (`MaTT`, `MaTV`, `MaTB`, `TGVao`, `TGMuon`, `TGTra`) VALUES
-(1, 1120150184, NULL, '2024-01-05 09:00:00', NULL, NULL),
-(2, 1123330257, 1000001, NULL, '2024-02-12 10:00:32', '2024-02-12 14:00:00');
+(1, '1120150184', NULL, '2024-01-05 09:00:00', NULL, NULL),
+(2, '1123330257', 1000001, NULL, '2024-02-12 10:00:32', '2024-02-12 14:00:00');
 
 -- --------------------------------------------------------
 
@@ -97,7 +99,7 @@ INSERT INTO `thongtinsd` (`MaTT`, `MaTV`, `MaTB`, `TGVao`, `TGMuon`, `TGTra`) VA
 
 CREATE TABLE `xuly` (
   `MaXL` int(10) NOT NULL,
-  `MaTV` int(10) NOT NULL,
+  `MaTV` varchar(100) NOT NULL,
   `HinhThucXL` varchar(250) DEFAULT NULL,
   `SoTien` int(100) DEFAULT NULL,
   `NgayXL` datetime DEFAULT NULL,
@@ -109,9 +111,9 @@ CREATE TABLE `xuly` (
 --
 
 INSERT INTO `xuly` (`MaXL`, `MaTV`, `HinhThucXL`, `SoTien`, `NgayXL`, `TrangThaiXL`) VALUES
-(1, 1121530087, 'Khóa thẻ 1 tháng', NULL, '2023-09-12 08:00:00', 0),
-(2, 1123330258, 'Khóa thẻ 2 tháng', NULL, '2023-09-12 08:00:00', 0),
-(3, 1123330257, 'Bồi thường mất tài sản', 300000, '2023-09-12 08:00:00', 0);
+(1, '1121530087', 'Khóa thẻ 1 tháng', NULL, '2023-09-12 08:00:00', 0),
+(2, '1123330258', 'Khóa thẻ 2 tháng', NULL, '2023-09-12 08:00:00', 0),
+(3, '1123330257', 'Bồi thường mất tài sản', 300000, '2023-09-12 08:00:00', 1);
 
 --
 -- Indexes for dumped tables
@@ -150,12 +152,6 @@ ALTER TABLE `xuly`
 --
 
 --
--- AUTO_INCREMENT for table `thanhvien`
---
-ALTER TABLE `thanhvien`
-  MODIFY `MaTV` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1123330261;
-
---
 -- AUTO_INCREMENT for table `thietbi`
 --
 ALTER TABLE `thietbi`
@@ -181,8 +177,8 @@ ALTER TABLE `xuly`
 -- Constraints for table `thongtinsd`
 --
 ALTER TABLE `thongtinsd`
-  ADD CONSTRAINT `thongtinsd_ibfk_1` FOREIGN KEY (`MaTV`) REFERENCES `thanhvien` (`MaTV`),
-  ADD CONSTRAINT `thongtinsd_ibfk_2` FOREIGN KEY (`MaTB`) REFERENCES `thietbi` (`MaTB`);
+  ADD CONSTRAINT `thongtinsd_ibfk_2` FOREIGN KEY (`MaTB`) REFERENCES `thietbi` (`MaTB`),
+  ADD CONSTRAINT `thongtinsd_ibfk_3` FOREIGN KEY (`MaTV`) REFERENCES `thanhvien` (`MaTV`);
 
 --
 -- Constraints for table `xuly`
