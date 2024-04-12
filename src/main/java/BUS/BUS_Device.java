@@ -15,7 +15,7 @@ public class BUS_Device {
     private DAO_Device dao_device;
     public boolean addDevice( _Device device){
         dao_device = new DAO_Device();
-        if(dao_device.AddDevice(device))
+        if(device.Validate() && dao_device.AddDevice(device))       //Nếu thêm thành công và xác thực thành công thì xuất hiện thông báo thành công
             return true;
         else
             return false;
@@ -23,7 +23,15 @@ public class BUS_Device {
     
     public boolean addDevices( List<_Device> devices){
         dao_device = new DAO_Device();
-        if(dao_device.AddDevices(devices))
+        boolean isValid = true;
+        for(_Device d : devices){
+            if(d.Validate()==false)
+            {
+                 isValid = false;
+                 break; // Ngừng vòng lặp khi có một d.Validate() trả về false
+            }
+        }
+        if(isValid && dao_device.AddDevices(devices))
             return true;
         else
             return false;
@@ -50,9 +58,9 @@ public class BUS_Device {
         return dao_device.getAllDevices();
     }
     
-    public List<_Device> SearchbyNameorId(String value){
+    public List<_Device> getAllDevices(String id, String type, String year){        //Lọc theo theo các điều kiện
         dao_device = new DAO_Device();
-        return dao_device.getDevicebyIDOrName(value);
+        return dao_device.getAllDevices(id, type, year);
     }
     
      public _Device SearchAvailableDevice(String id){
