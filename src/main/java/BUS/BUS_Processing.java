@@ -30,11 +30,9 @@ public class BUS_Processing {
     public boolean deleteProcess(int id) {
     return dao.deleteProcess(id);
     }
-    public List<_Processing> getProcessingListByProcessingType(String type) {
-    return dao.getProcessingListByProcessingType(type);
+    public List<Object[]> getAllProcessing(String type, LocalDate startDate, LocalDate endDate) {
+    return dao.getAllProcessing(type, startDate, endDate);
     }
-    public List<_Processing> getProcessingListByProcessingDate(LocalDate startDate, LocalDate endDate){
-    return dao.getProcessingListByProcessingDate(startDate, endDate);
-    }
+
     
 }
