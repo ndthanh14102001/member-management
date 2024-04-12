@@ -80,6 +80,14 @@ public class _Device implements Serializable {
     public void setMoTaTB(String moTaTB) {
         this.moTaTB = moTaTB;
     }
+    
+    
+    public boolean Validate(){
+        if (maTB == null || String.valueOf(maTB).length() != 6) 
+            return false;
+        else
+            return true;
+    }
 
     public Collection<_UsageInformation> getUsageInformationCollection() {
         return usageInformationCollection;
