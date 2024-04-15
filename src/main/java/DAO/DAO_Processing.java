@@ -6,6 +6,8 @@ package DAO;
 
 import Entity._Processing;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,26 +18,27 @@ import org.hibernate.query.Query;
  * @author HP
  */
 public class DAO_Processing {
+
     private SessionFactory factory;
     private Session session;
-    
+
     public DAO_Processing() {
         factory = new ConnectDB().getFactory();
         session = factory.openSession();
     }
-    
+
     public List getAllProcessing() {
         try {
             List<Object> results = session.createQuery("FROM _Processing p JOIN p.maTV").getResultList();
             return results;
-        } catch (Exception e) { 
+        } catch (Exception e) {
             System.err.println(e);
         } finally {
             session.close();
         }
         return null;
     }
-    
+
     public boolean createProcess(_Processing processing) {
         try {
             session.save(processing);
@@ -47,7 +50,7 @@ public class DAO_Processing {
         }
         return false;
     }
-    
+
     public boolean updateProcess(_Processing processing) {
         try {
             session.update(processing);
@@ -59,7 +62,7 @@ public class DAO_Processing {
         }
         return false;
     }
-    
+
     public boolean deleteProcess(int id) {
         try {
             _Processing pro = session.get(_Processing.class, id);
@@ -75,33 +78,41 @@ public class DAO_Processing {
         }
         return false;
     }
-    
-    public List<_Processing> getProcessingListByProcessingType(String type) {
-        List<_Processing> processingList = null;
+
+    public List<Object[]> getAllProcessing(String type, LocalDate startDate, LocalDate endDate) {
         try {
-            Query<_Processing> processing = session.createNamedQuery("_Processing.findByHinhThucXL", _Processing.class);
-            processing.setParameter("hinhThucXL", type);
-            processingList = processing.getResultList();
+            StringBuilder jpql = new StringBuilder("SELECT p FROM _Processing p WHERE 1=1");
+            boolean hasType = type != null && !type.isEmpty();
+            boolean hasStartDate = startDate != null;
+            boolean hasEndDate = endDate != null;
+
+            if (hasType) {
+                jpql.append(" AND p.type = :type");
+            } else if (hasStartDate && hasEndDate) {
+                jpql.append(" AND p.processingDate BETWEEN :startDate AND :endDate");
+            } else if (hasStartDate) {
+                jpql.append(" AND p.processingDate >= :startDate");
+            } else if (hasEndDate) {
+                jpql.append(" AND p.processingDate <= :endDate");
+            }
+
+            Query<Object[]> query = session.createQuery(jpql.toString(), Object[].class);
+
+            if (hasType) {
+                query.setParameter("type", type);
+            } else if (hasStartDate) {
+                query.setParameter("startDate", startDate.atStartOfDay());
+            } else if (hasEndDate) {
+                query.setParameter("endDate", endDate.atTime(LocalTime.MAX));
+            }
+
+            List<Object[]> results = query.getResultList();
+            return results;
         } catch (Exception e) {
-            System.err.println(e);
+            e.printStackTrace();
         } finally {
             session.close();
         }
-        return processingList;
-    }
-    
-    public List<_Processing> getProcessingListByProcessingDate(LocalDate startDate, LocalDate endDate){
-        List<_Processing> processingList = null;
-        try {
-            Query<_Processing> processing = session.createQuery("FROM _Processing WHERE ngayXL BETWEEN :startDate AND :endDate");
-            processing.setParameter("startDate", startDate);
-            processing.setParameter("endDate", endDate);
-            processingList = processing.getResultList();
-        } catch (Exception e) {
-            System.err.println(e);
-        } finally {
-            session.close();
-        }
-        return processingList;
+        return new ArrayList<>();
     }
 }

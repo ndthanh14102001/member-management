@@ -112,11 +112,12 @@ public class DAO_Device {
         return results;
     }
     
-    public List<_Device> getDevicebyIDOrName(String value){
+    public List<_Device> getAllDevices(String id, String type, String year){
         try {
-            Query query = session.createQuery("FROM _Device WHERE maTB = :maTB OR tenTB = :tenTB");
-            query.setParameter("maTB", value);
-            query.setParameter("tenTB", value);
+            Query query = session.createQuery("FROM _Device WHERE maTB LIKE :id AND maTB LIKE :type AND maTB LIKE :year");
+            query.setParameter("type", type+"%");
+            query.setParameter("year", "%"+year+"%");
+            query.setParameter("id", "%"+id);          
             results = query.getResultList();            
         } catch (Exception e) {
             e.printStackTrace();

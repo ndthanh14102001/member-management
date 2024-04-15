@@ -35,10 +35,8 @@ public class _Member implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "MaTV")
-    private Integer maTV;
+    private String maTV;
     @Basic(optional = false)
     @Column(name = "HoTen")
     private String hoTen;
@@ -55,20 +53,20 @@ public class _Member implements Serializable {
     public _Member() {
     }
 
-    public _Member(Integer maTV) {
+    public _Member(String maTV) {
         this.maTV = maTV;
     }
 
-    public _Member(Integer maTV, String hoTen) {
+    public _Member(String maTV, String hoTen) {
         this.maTV = maTV;
         this.hoTen = hoTen;
     }
 
-    public Integer getMaTV() {
+    public String getMaTV() {
         return maTV;
     }
 
-    public void setMaTV(Integer maTV) {
+    public void setMaTV(String maTV) {
         this.maTV = maTV;
     }
 
@@ -84,12 +82,28 @@ public class _Member implements Serializable {
         return khoa;
     }
 
+    public String getKhoaById() {
+        try {
+            return maTV.substring(5, 9);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public void setKhoa(String khoa) {
         this.khoa = khoa;
     }
 
     public String getNganh() {
         return nganh;
+    }
+
+    public String getNganhById() {
+        try {
+            return maTV.substring(9);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public void setNganh(String nganh) {
@@ -110,6 +124,26 @@ public class _Member implements Serializable {
 
     public void setProcessings(List<_Processing> processings) {
         this.processings = processings;
+    }
+
+    public String getSTTById() {
+        try {
+            return maTV.substring(0, 5);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public void checkMaTVFormat() throws Exception {
+        if (maTV == null || maTV.length() != 13) {
+            throw new Exception("Mã TV phải có độ dài 13 ký tự.");
+        }
+        String stt = getSTTById();
+        try {
+            int sttInt = Integer.parseInt(stt);
+        } catch (NumberFormatException e) {
+            throw new Exception("Số thứ tự (5 ký tự đầu) phải là số.");
+        }
     }
 
     @Override
