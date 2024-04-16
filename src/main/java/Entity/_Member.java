@@ -171,4 +171,8 @@ public class _Member implements Serializable {
         return "Entity._Member[ maTV=" + maTV + " ]";
     }
 
+    public int getTrangThaiVP() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
