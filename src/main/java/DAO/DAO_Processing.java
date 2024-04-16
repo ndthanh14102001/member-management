@@ -6,6 +6,7 @@ package DAO;
 
 import Entity._Processing;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -89,32 +90,36 @@ public class DAO_Processing {
         return false;
     }
     
-    public List<_Processing> getProcessingList(String type) {
-        List<_Processing> processingList = null;
+    public List<Object[]> getProcessingList(String type, LocalDate startDate, LocalDate endDate){
         try {
-            Query<_Processing> processing = session.createNamedQuery("_Processing.findByHinhThucXL", _Processing.class);
-            processing.setParameter("hinhThucXL", type);
-            processingList = processing.getResultList();
+            StringBuilder jpql = new StringBuilder("SELECT p FROM _Processing p JOIN p.maTV m WHERE 1=1");
+            boolean hasType = type != null && !type.isEmpty();
+            boolean hasStartDate = startDate != null && startDate != null;
+            boolean hasEndDate = endDate != null && endDate != null;
+
+            if (hasType) {
+                jpql.append(" AND p.hinhThucXL = :type");
+            } else if (hasStartDate && hasEndDate) {
+                jpql.append("AND p.ngayXL BETWEEN :startDate AND :endDate");
+            }
+
+            Query<Object[]> query = session.createQuery(jpql.toString(), Object[].class);
+
+            if (hasType) {
+                query.setParameter("type", type);
+            } else if (hasStartDate && hasEndDate) {
+                query.setParameter("startDate", startDate);
+                query.setParameter("endDate", endDate);
+            }
+
+            List<Object[]> results = query.getResultList();
+            return results;
+
         } catch (Exception e) {
-            System.err.println(e);
+            e.printStackTrace();
         } finally {
             session.close();
         }
-        return processingList;
-    }
-    
-    public List<_Processing> getProcessingList(LocalDate startDate, LocalDate endDate){
-        List<_Processing> processingList = null;
-        try {
-            Query<_Processing> processing = session.createQuery("FROM _Processing WHERE ngayXL BETWEEN :startDate AND :endDate");
-            processing.setParameter("startDate", startDate);
-            processing.setParameter("endDate", endDate);
-            processingList = processing.getResultList();
-        } catch (Exception e) {
-            System.err.println(e);
-        } finally {
-            session.close();
-        }
-        return processingList;
+        return new ArrayList<>();
     }
 }
