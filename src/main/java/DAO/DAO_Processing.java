@@ -6,8 +6,6 @@ package DAO;
 
 import Entity._Processing;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -78,40 +76,32 @@ public class DAO_Processing {
         return false;
     }
     
-    public List<Object[]> getAllProcessing(String type, LocalDate startDate, LocalDate endDate) {
+    public List<_Processing> getProcessingList(String type) {
+        List<_Processing> processingList = null;
         try {
-            StringBuilder jpql = new StringBuilder("SELECT p FROM _Processing p WHERE 1=1");
-            boolean hasType = type != null && !type.isEmpty();
-            boolean hasStartDate = startDate != null;
-            boolean hasEndDate = endDate != null;
-
-            if (hasType) {
-                jpql.append(" AND p.type = :type");
-            } else if (hasStartDate && hasEndDate) {
-                jpql.append(" AND p.processingDate BETWEEN :startDate AND :endDate");
-            } else if (hasStartDate) {
-                jpql.append(" AND p.processingDate >= :startDate");
-            } else if (hasEndDate) {
-                jpql.append(" AND p.processingDate <= :endDate");
-            }
-
-            Query<Object[]> query = session.createQuery(jpql.toString(), Object[].class);
-
-            if (hasType) {
-                query.setParameter("type", type);
-            } else if (hasStartDate) {
-                query.setParameter("startDate", startDate.atStartOfDay());
-            } else if (hasEndDate) {
-                query.setParameter("endDate", endDate.atTime(LocalTime.MAX));
-            }
-
-            List<Object[]> results = query.getResultList();
-            return results;
+            Query<_Processing> processing = session.createNamedQuery("_Processing.findByHinhThucXL", _Processing.class);
+            processing.setParameter("hinhThucXL", type);
+            processingList = processing.getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e);
         } finally {
             session.close();
         }
-        return new ArrayList<>();
+        return processingList;
+    }
+    
+    public List<_Processing> getProcessingList(LocalDate startDate, LocalDate endDate){
+        List<_Processing> processingList = null;
+        try {
+            Query<_Processing> processing = session.createQuery("FROM _Processing WHERE ngayXL BETWEEN :startDate AND :endDate");
+            processing.setParameter("startDate", startDate);
+            processing.setParameter("endDate", endDate);
+            processingList = processing.getResultList();
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return processingList;
     }
 }
