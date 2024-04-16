@@ -27,8 +27,8 @@ public class BUS_Processing {
     public boolean updateProcess(_Processing processing) {
     return dao.updateProcess(processing);
     }
-    public boolean deleteProcess(int id) {
-    return dao.deleteProcess(id);
+    public boolean deleteProcess(_Processing processing) {
+    return dao.deleteProcess(processing);
     }
     public List<_Processing> getProcessingList(String type) {
     return dao.getProcessingList(type);
