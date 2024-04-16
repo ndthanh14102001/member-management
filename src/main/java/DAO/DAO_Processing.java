@@ -53,8 +53,19 @@ public class DAO_Processing {
 
     public boolean updateProcess(_Processing processing) {
         try {
-            session.update(processing);
-            return true;
+            session.beginTransaction();
+            Query query = session.createQuery("UPDATE _Processing SET soTien=:sT, trangThaiXL=:ttXL "
+                    + "WHERE maXL=:maXL");
+//            query.setParameter("htXL", processing.getHinhThucXL());
+            query.setParameter("sT", processing.getSoTien());
+            query.setParameter("ttXL", processing.getTrangThaiXL());
+            query.setParameter("maXL", processing.getMaXL());
+
+            int rowsUpdated = query.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                return true;
+            }
         } catch (Exception e) {
             System.err.println(e);
         } finally {
@@ -63,11 +74,13 @@ public class DAO_Processing {
         return false;
     }
 
-    public boolean deleteProcess(int id) {
+    public boolean deleteProcess(_Processing processing) {
         try {
-            _Processing pro = session.get(_Processing.class, id);
-            if (pro != null) {
-                session.delete(pro);
+            session.beginTransaction();
+            Query query = session.createQuery("DELETE FROM _Processing WHERE maXL = :maXL");
+            query.setParameter("maXL", processing.getMaXL());
+            int rowsUpdated = query.executeUpdate();
+            if (rowsUpdated > 0) {
                 return true;
             }
             return true;

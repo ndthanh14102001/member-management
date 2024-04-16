@@ -9,10 +9,13 @@ import BUS.BUS_Processing;
 import Entity._Member;
 import Entity._Processing;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -25,8 +28,7 @@ public class GUI_Processing extends javax.swing.JFrame {
      */
     private DefaultTableModel model;
     // Thêm biến để lưu tổng giá trị
-    private double totalAmount;
-    
+
     public GUI_Processing() {
         initComponents();
         setLocationRelativeTo(null);
@@ -41,9 +43,9 @@ public class GUI_Processing extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(5).setWidth(0);
         jTable1.getColumnModel().getColumn(5).setMinWidth(0);
         jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
+        enabledtext.setVisible(false);
         displayDataInTable();
         // Khởi tạo tổng giá trị ban đầu
-        totalAmount = 0;
         displayMemberIDs();
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -51,7 +53,7 @@ public class GUI_Processing extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void displayMemberIDs() {
         BUS_Member busMember = new BUS_Member();
         List<Object[]> members = busMember.getAllMembers("", "", "");
@@ -66,12 +68,15 @@ public class GUI_Processing extends javax.swing.JFrame {
             jComboBox8.addItem(memberID);
         }
     }
-    
+
     private void displayDataInTable() {
         model.setRowCount(0);
         BUS_Processing busProcessing = new BUS_Processing();
         List<Object> processingList = busProcessing.getAllProcessing();
-        
+
+        // Đặt lại giá trị tổng số tiền về 0 mỗi khi gọi lại phương thức
+        double totalAmount = 0;
+
         if (processingList != null) {
             for (Object processing : processingList) {
                 if (processing instanceof _Processing) {
@@ -85,12 +90,15 @@ public class GUI_Processing extends javax.swing.JFrame {
                         trangThai,
                         proc.getMaXL()
                     });
+
                     // Kiểm tra và tính tổng giá trị chỉ nếu SoTien không null
                     if (proc.getSoTien() != null) {
                         totalAmount += proc.getSoTien();
                     }
                 }
             }
+
+            // Hiển thị tổng số tiền mới
             DecimalFormat df = new DecimalFormat("#,###.##");
             labelStatisticsFor5.setText("Tổng tiền: " + df.format(totalAmount));
         } else {
@@ -118,6 +126,7 @@ public class GUI_Processing extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
         labelStatisticsFor3 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         labelStatisticsFor5 = new javax.swing.JLabel();
         labelStatisticsFor6 = new javax.swing.JLabel();
@@ -175,8 +184,13 @@ public class GUI_Processing extends javax.swing.JFrame {
         labelStatisticsFor.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor.setText("Trạng thái xử lý");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "0", "1" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chọn", "chưa xử lý", "Đã xử lý" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(364, 42));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
 
         labelStatisticsFor1.setBackground(new java.awt.Color(255, 255, 255));
         labelStatisticsFor1.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
@@ -184,8 +198,13 @@ public class GUI_Processing extends javax.swing.JFrame {
         labelStatisticsFor1.setText("Hình thức xử lý");
         labelStatisticsFor1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chọn", "khóa thẻ 1 tháng", "Khóa thẻ 2 tháng", "Khóa thẻ vĩnh viễn", "Bồi thường mất tài sản", "Khóa thẻ 1 tháng và bồi thường" }));
         jComboBox2.setPreferredSize(new java.awt.Dimension(364, 20));
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
 
         labelStatisticsFor2.setBackground(new java.awt.Color(255, 255, 255));
         labelStatisticsFor2.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
@@ -202,6 +221,13 @@ public class GUI_Processing extends javax.swing.JFrame {
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox4.setPreferredSize(new java.awt.Dimension(364, 20));
+
+        jButton4.setText("Reload");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -222,14 +248,15 @@ public class GUI_Processing extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
-                        .addComponent(labelStatisticsFor1)
-                        .addGap(26, 26, 26)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelStatisticsFor1))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
                         .addComponent(labelStatisticsFor3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(110, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -248,6 +275,7 @@ public class GUI_Processing extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelStatisticsFor3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(labelStatisticsFor2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -264,7 +292,7 @@ public class GUI_Processing extends javax.swing.JFrame {
         labelStatisticsFor6.setBackground(new java.awt.Color(255, 255, 255));
         labelStatisticsFor6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         labelStatisticsFor6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        labelStatisticsFor6.setText("Tên thành viên");
+        labelStatisticsFor6.setText("Mã thành viên");
 
         labelStatisticsFor7.setBackground(new java.awt.Color(255, 255, 255));
         labelStatisticsFor7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -335,6 +363,7 @@ public class GUI_Processing extends javax.swing.JFrame {
         enabledtext.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         enabledtext.setCaretColor(new java.awt.Color(255, 255, 255));
         enabledtext.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        enabledtext.setEnabled(false);
         enabledtext.setSelectionColor(new java.awt.Color(255, 255, 255));
 
         labelStatisticsFor10.setBackground(new java.awt.Color(255, 255, 255));
@@ -342,10 +371,10 @@ public class GUI_Processing extends javax.swing.JFrame {
         labelStatisticsFor10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor10.setText("Trạng thái xử lý");
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "0", "1" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1" }));
         jComboBox5.setPreferredSize(new java.awt.Dimension(364, 42));
 
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn", "khóa thẻ 1 tháng", "Khóa thẻ 2 tháng", "Khóa thẻ vĩnh viễn", "Bồi thường mất tài sản", "Khóa thẻ 1 tháng và bồi thường" }));
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "khóa thẻ 1 tháng", "Khóa thẻ 2 tháng", "Khóa thẻ vĩnh viễn", "Bồi thường mất tài sản", "Khóa thẻ 1 tháng và bồi thường" }));
         jComboBox7.setPreferredSize(new java.awt.Dimension(364, 42));
 
         jComboBox8.setPreferredSize(new java.awt.Dimension(364, 42));
@@ -502,7 +531,7 @@ public class GUI_Processing extends javax.swing.JFrame {
             BUS_Processing busProcessing = new BUS_Processing();
             List<Object> processingList = busProcessing.getAllProcessing();
             String memberID = null;
-            
+
             for (Object processing : processingList) {
                 if (processing instanceof _Processing) {
                     _Processing proc = (_Processing) processing;
@@ -521,16 +550,31 @@ public class GUI_Processing extends javax.swing.JFrame {
             TextFieldSt1.setText(String.valueOf(amount));
             jComboBox5.setSelectedItem(statusIndex);
             enabledtext.setText(maxl);
-            
+
         }
     }
-    
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String memberID = (String) jComboBox8.getSelectedItem();
         String processingMethod = (String) jComboBox7.getSelectedItem();
         Date processingDate = borrowDateChooser.getDate();
-        int amount = Integer.parseInt(TextFieldSt1.getText());
+        String amountString = TextFieldSt1.getText();
+        int amount;
+        try {
+            amount = Integer.parseInt(amountString);
+        } catch (NumberFormatException e) {
+            // Người dùng đã nhập một chuỗi không thể chuyển đổi thành số nguyên
+            // Hiển thị một thông báo cảnh báo và không thực hiện thêm xử lý
+
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập một số nguyên cho số tiền!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            TextFieldSt1.setText("");
+
+            // Di chuyển tiêu điểm (focus) vào TextFieldSt1
+            TextFieldSt1.requestFocus();
+
+            return; // Dừng thực hiện tiếp theo
+        }
+
         int status = jComboBox5.getSelectedIndex();
 
         // Create a new _Processing object
@@ -546,36 +590,30 @@ public class GUI_Processing extends javax.swing.JFrame {
         // Call the createProcess method
         BUS_Processing busProcessing = new BUS_Processing();
         boolean success = busProcessing.createProcess(processing);
-        
+
         if (success) {
             // Update the table
             displayDataInTable();
             // Display success message
-            JOptionPane.showMessageDialog(this, "Processing record added successfully!");
+            JOptionPane.showMessageDialog(this, "Thêm thành công!");
         } else {
             // Display error message
-            JOptionPane.showMessageDialog(this, "Failed to add processing record. Please try again.");
+            JOptionPane.showMessageDialog(this, "Thêm không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String memberID = (String) jComboBox8.getSelectedItem();
-        String processingMethod = (String) jComboBox7.getSelectedItem();
-        Date processingDate = borrowDateChooser.getDate();
         int amount = Integer.parseInt(TextFieldSt1.getText());
         int status = jComboBox5.getSelectedIndex();
         int id = Integer.parseInt(enabledtext.getText());
         // Create a new _Processing object
         _Processing processing = new _Processing();
-        processing.setMaXL(id);
         // Set properties of the processing object
-        processing.setMaTV(new _Member(memberID));
-        processing.setHinhThucXL(processingMethod);
         processing.setSoTien(amount);
-        processing.setNgayXL(processingDate);
         processing.setTrangThaiXL(status);
+        processing.setMaXL(id);
 
         // Gọi phương thức updateProcess từ BUS để cập nhật dữ liệu
         BUS_Processing busProcessing = new BUS_Processing();
@@ -588,28 +626,72 @@ public class GUI_Processing extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
         } else {
             // Xử lý khi cập nhật thất bại
-            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!");
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        int id = Integer.parseInt(enabledtext.getText());
-        BUS_Processing busProcessing = new BUS_Processing();
-        boolean success = busProcessing.deleteProcess(id);
 
-        // Kiểm tra xem cập nhật thành công hay không và thực hiện các hành động tương ứng
-        if (success) {
+        int id = Integer.parseInt(enabledtext.getText());
+        BUS_Processing daoProcessing = new BUS_Processing();
+
+        // Tạo một đối tượng _Processing với mã là 11 (ví dụ)
+        _Processing processing = new _Processing();
+        processing.setMaXL(id); // Set mã XL tương ứng với mã cần xóa
+
+        // Gọi hàm deleteProcess với đối tượng _Processing đã tạo
+        boolean deletionResult = daoProcessing.deleteProcess(processing);
+
+        if (deletionResult) {
             displayDataInTable();
-            // Xử lý khi cập nhật thành công
-            JOptionPane.showMessageDialog(this, "Xóa thành công!");
+            JOptionPane.showMessageDialog(this, "Xóa Mã xử lý " + processing.getMaXL() + " thành công!");
         } else {
-            // Xử lý khi cập nhật thất bại
-            JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+            JOptionPane.showMessageDialog(this, "Xóa thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        
+//        
 
     }//GEN-LAST:event_jButton3ActionPerformed
+    private void filterTableBySelectedValues() {
+        DefaultTableModel obj_course = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> oj1_course = new TableRowSorter<>(obj_course);
+        jTable1.setRowSorter(oj1_course);
+
+        String selectedItem1 = (String) jComboBox1.getSelectedItem();
+        String selectedItem2 = (String) jComboBox2.getSelectedItem();
+
+        List<RowFilter<Object, Object>> filters = new ArrayList<>();
+        if (!"chọn".equals(selectedItem1)) {
+            filters.add(RowFilter.regexFilter(selectedItem1));
+        }
+        if (!"chọn".equals(selectedItem2)) {
+            filters.add(RowFilter.regexFilter(selectedItem2));
+        }
+
+        oj1_course.setRowFilter(RowFilter.andFilter(filters));
+    }
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        filterTableBySelectedValues();
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+        // TODO add your handling code here:
+        filterTableBySelectedValues();
+    }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+
+        jComboBox1.setSelectedIndex(0);
+        jComboBox2.setSelectedIndex(0);
+        jComboBox3.setSelectedIndex(0);
+        jComboBox4.setSelectedIndex(0);
+        DefaultTableModel obj_course = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> oj1_course = new TableRowSorter<>(obj_course);
+        jTable1.setRowSorter(oj1_course);
+
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -654,6 +736,7 @@ public class GUI_Processing extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;

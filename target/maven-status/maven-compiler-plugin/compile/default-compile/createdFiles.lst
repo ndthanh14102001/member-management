@@ -1,4 +1,5 @@
 DAO\DAO_Processing.class
+GUI\GUI_Processing$6.class
 DAO\DAO_Example.class
 Entity\_Member.class
 DAO\DAO_UsageInformation.class
@@ -12,12 +13,14 @@ DAO\DAO_Member.class
 BUS\BUS_Processing.class
 Entity\_Device.class
 GUI\Statistics$1.class
+GUI\GUI_Processing$7.class
 com\mycompany\member_management\Member_Management.class
 BUS\BUS_UsageInformation.class
 DAO\DAO_Device.class
 Entity\_Processing.class
 GUI\GUI_Processing$2.class
 Entity\_UsageInformation.class
+GUI\GUI_Processing$8.class
 GUI\GUI_Processing$3.class
 DAO\ConnectDB.class
 BUS\BUS_Member.class
