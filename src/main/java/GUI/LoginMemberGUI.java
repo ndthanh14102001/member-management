@@ -4,6 +4,13 @@
  */
 package GUI;
 
+import DAO.DAO_Device;
+import DAO.DAO_Member;
+import Entity._Device;
+import Entity._Member;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author a410
@@ -13,9 +20,77 @@ public class LoginMemberGUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginMemberGUI
      */
+    private DefaultTableModel model1; // Model cho bảng 1
+    private DefaultTableModel model2; // Model cho bảng 2
+
     public LoginMemberGUI() {
         initComponents();
+        setLocationRelativeTo(null);
+
+        // Tạo model cho bảng 1
+        model1 = new DefaultTableModel();
+        model1.addColumn("Mã Thành Viên");
+        model1.addColumn("Họ Tên");
+        model1.addColumn("Khoa");
+        model1.addColumn("Ngành");
+        model1.addColumn("SĐT");
+
+        // Tạo model cho bảng 2
+        model2 = new DefaultTableModel();
+        model2.addColumn("Mã Thiết Bị");
+        model2.addColumn("Tên Thiết Bị");
+        model2.addColumn("Mô Tả");
+
+        // Đặt model cho từng vùng dữ liệu của jTable
+        jTable1.setModel(model1);
+        jTable2.setModel(model2);
+
+        // Hiển thị dữ liệu cho mỗi bảng
+        displayDataInTable1();
+        displayDataInTable2();
     }
+
+    private void displayDataInTable1() {
+    // Xóa dữ liệu cũ
+    model1.setRowCount(0);
+
+    // Lấy dữ liệu từ bảng 1 và thêm vào model1
+    DAO_Member daoMember = new DAO_Member();
+    List<Object[]> memberList = daoMember.getAllMembers();
+
+    if (memberList != null) {
+        for (Object[] memberData : memberList) {
+            _Member mem = (_Member) memberData[0];
+            String processingStatus = (String) memberData[1];
+            // Thêm dữ liệu vào model1
+            model1.addRow(new Object[]{
+                mem.getMaTV(),
+                mem.getHoTen(),
+                mem.getKhoa(),
+                mem.getNganh(),
+                mem.getSdt(),
+                processingStatus // Thêm trạng thái xử lý vào cột cuối cùng
+            });
+        }
+    }
+}
+
+
+private void displayDataInTable2() {
+    // Xóa dữ liệu cũ
+    model2.setRowCount(0);
+
+    // Lấy dữ liệu từ bảng thiết bị và thêm vào model2
+    DAO_Device daoDevice = new DAO_Device();
+    List<_Device> deviceList = daoDevice.getAllDevices();
+    for (_Device device : deviceList) {
+        model2.addRow(new Object[]{
+            device.getMaTB(),
+            device.getTenTB(),
+            device.getMoTaTB()
+        });
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.

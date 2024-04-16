@@ -26,39 +26,37 @@ public class LogoutGUI extends javax.swing.JFrame {
         model.addColumn("Khoa");
         model.addColumn("Ngành");
         model.addColumn("Số Điện Thoại");
+        model.addColumn("XLVP");
         
 
         jTable1.setModel(model);
         displayDataInTable();
     }
     private void displayDataInTable() {
-    // Clear the existing table data
+    // Xóa dữ liệu cũ
     model.setRowCount(0);
 
-    // Retrieve data from the database and add it to the model
-    DAO_Member daoMember = new DAO_Member(); // Assuming DAO_Member is the class to handle member data
-    List<Object[]> memberList = daoMember.getAllMembers(); // Assuming getAllMembers() retrieves all member data
+    // Lấy dữ liệu từ bảng 1 và thêm vào model1
+    DAO_Member daoMember = new DAO_Member();
+    List<Object[]> memberList = daoMember.getAllMembers();
 
     if (memberList != null) {
-        for (Object member : memberList) {
-            if (member instanceof _Member) {
-                _Member mem = (_Member) member;
-                // Assuming Member class has appropriate getter methods for member attributes
-                model.addRow(new Object[]{
-                    mem.getMaTV(),
-                    mem.getHoTen(),
-                    mem.getKhoa(),
-                    mem.getNganh(),
-                    mem.getSdt(),
-                    
-                });
-                
-            }
+        for (Object[] memberData : memberList) {
+            _Member mem = (_Member) memberData[0];
+            String processingStatus = (String) memberData[0];
+            // Thêm dữ liệu vào model1
+            model.addRow(new Object[]{
+                mem.getMaTV(),
+                mem.getHoTen(),
+                mem.getKhoa(),
+                mem.getNganh(),
+                mem.getSdt(),
+                processingStatus // Thêm trạng thái xử lý vào cột cuối cùng
+            });
         }
-    } else {
-        System.out.println("No data available or an error occurred while querying.");
     }
 }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,14 +80,14 @@ public class LogoutGUI extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, "", null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, "", null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã TV", "Họ Tên", "Khoa", "Ngành", "SĐT"
+                "Mã TV", "Họ Tên", "Khoa", "Ngành", "SĐT", "XLVP"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -109,23 +107,23 @@ public class LogoutGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel2)
-                        .addGap(36, 36, 36)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(8, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(117, 117, 117))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(36, 36, 36)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(426, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

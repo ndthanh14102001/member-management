@@ -22,6 +22,7 @@ public class MemberGUI1 extends javax.swing.JFrame {
     private DefaultTableModel model;
 
     public MemberGUI1() {
+        
         initComponents();
         setLocationRelativeTo(null);
         model = new DefaultTableModel();
@@ -30,40 +31,36 @@ public class MemberGUI1 extends javax.swing.JFrame {
         model.addColumn("Khoa");
         model.addColumn("Ngành");
         model.addColumn("Số Điện Thoại");
-        model.addColumn("Trạng Thái VP");
+        model.addColumn("XLVP");
+        
 
         jTable1.setModel(model);
         displayDataInTable();
     }
     private void displayDataInTable() {
-    // Clear the existing table data
+    // Xóa dữ liệu cũ
     model.setRowCount(0);
 
-    // Retrieve data from the database and add it to the model
-    DAO_Member daoMember = new DAO_Member(); // Assuming DAO_Member is the class to handle member data
-    List<Object[]> memberList = daoMember.getAllMembers(); // Assuming getAllMembers() retrieves all member data
+    // Lấy dữ liệu từ bảng 1 và thêm vào model1
+    DAO_Member daoMember = new DAO_Member();
+    List<Object[]> memberList = daoMember.getAllMembers();
 
     if (memberList != null) {
-        for (Object member : memberList) {
-            if (member instanceof _Member) {
-                _Member mem = (_Member) member;
-                // Assuming Member class has appropriate getter methods for member attributes
-                model.addRow(new Object[]{
-                    mem.getMaTV(),
-                    mem.getHoTen(),
-                    mem.getKhoa(),
-                    mem.getNganh(),
-                    mem.getSdt(),
-                    mem.getSdt()
-                });
-                
-            }
+        for (Object[] memberData : memberList) {
+            _Member mem = (_Member) memberData[0];
+            String processingStatus = (String) memberData[1];
+            // Thêm dữ liệu vào model1
+            model.addRow(new Object[]{
+                mem.getMaTV(),
+                mem.getHoTen(),
+                mem.getKhoa(),
+                mem.getNganh(),
+                mem.getSdt(),
+                processingStatus // Thêm trạng thái xử lý vào cột cuối cùng
+            });
         }
-    } else {
-        System.out.println("No data available or an error occurred while querying.");
     }
 }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
