@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author a410
  */
-public class MemberGUI extends javax.swing.JFrame {
+public class GUI_Member extends javax.swing.JFrame {
 
     /**
      * Creates new form MemberGUI1
@@ -30,7 +30,7 @@ public class MemberGUI extends javax.swing.JFrame {
     private List<_Member> members = new ArrayList<>();
     private _Member selectedMember;
 
-    public MemberGUI() {
+    public GUI_Member() {
 
         initComponents();
         setLocationRelativeTo(null);
@@ -400,7 +400,7 @@ public class MemberGUI extends javax.swing.JFrame {
         List<String> memberIds = new ArrayList<>();
         // Duyệt qua mỗi dòng đã chọn
         for (int row : selectedRows) {
-            // Lấy giá trị của từng ô trong dòng đó và in ra console
+
             String maTV = (String) model.getValueAt(row, 0);
             memberIds.add(maTV);
         }
@@ -439,21 +439,23 @@ public class MemberGUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MemberGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Member.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MemberGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Member.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MemberGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Member.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MemberGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUI_Member.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MemberGUI().setVisible(true);
+                new GUI_Member().setVisible(true);
             }
         });
     }

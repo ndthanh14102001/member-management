@@ -21,24 +21,25 @@ import org.hibernate.query.Query;
  * @author trieu
  */
 public class DAO_UsageInformation {
+
     private SessionFactory factory;
     Session session;
-    
+
     public DAO_UsageInformation() {
         factory = new ConnectDB().getFactory();
         session = factory.openSession();
     }
-    
+
     public Boolean accessStudyArea(_Member member) {
         Date time = new Date();
         _UsageInformation usageInformation = new _UsageInformation();
         usageInformation.setMaTV(member);
-        
+
         usageInformation.setMaTB(null);
         usageInformation.setTGVao(time);
         usageInformation.setTGMuon(null);
         usageInformation.setTGTra(null);
-        
+
         try {
             session.beginTransaction();
             session.save(usageInformation);
@@ -47,13 +48,13 @@ public class DAO_UsageInformation {
         } catch (Exception e) {
             session.getTransaction().rollback();
             System.err.println(e);
-        } finally{
+        } finally {
             session.close();
         }
         return false;
     }
-    
-    public List getAllUsageInformation(){
+
+    public List getAllUsageInformation() {
         try {
             List<Object> usageInformationList = session.createQuery("FROM _UsageInformation u JOIN u.maTV m JOIN u.maTB d").getResultList();
             return usageInformationList;
@@ -64,7 +65,7 @@ public class DAO_UsageInformation {
         }
         return null;
     }
-    
+
     public List getMembersInStudyArea() {
         try {
             List<Object> members = session.createQuery("SELECT m FROM _Member m WHERE m.maTV IN (SELECT u.maTV.maTV FROM _UsageInformation u)").getResultList();
@@ -76,19 +77,31 @@ public class DAO_UsageInformation {
         }
         return null;
     }
-    
-//    public _Member getMembersNotInStudyAreaById(int memberId) {
-//        try {
-//            _Member member = (_Member) session.createQuery("FROM _Member m WHERE m.maTV NOT IN (SELECT u.maTV.maTV FROM _UsageInformation u)");
-//            return member;
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        } finally {
-//            session.close();
-//        }
-//        return null;
-//    }
-    
+
+    public _Member getMembersNotInStudyAreaById(int memberId) {
+        try {
+            _Member member = (_Member) session.createQuery("FROM _Member m WHERE m.maTV NOT IN (SELECT u.maTV.maTV FROM _UsageInformation u)");
+            return member;
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return null;
+    }
+
+    public List<_Member> getMembersNotInStudyArea() {
+        try {
+            List<_Member> member = session.createQuery("FROM _Member m WHERE m.maTV NOT IN (SELECT u.maTV.maTV FROM _UsageInformation u)").getResultList();
+            return member;
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return null;
+    }
+
 //    public List getDevicesAndMembers() {
 //        try {
 //            List<_UsageInformation> usages = session.createQuery("SELECT u FROM _UsageInformation u JOIN u.maTB d JOIN u.maTV m " 
@@ -101,7 +114,6 @@ public class DAO_UsageInformation {
 //        }
 //        return null;
 //    }
-    
     public List<Object[]> getDevicesAndMembers(String state, LocalDateTime borrowedStartTime, LocalDateTime borrowedEndTime) {
         try {
             StringBuilder jpql = new StringBuilder("SELECT d, m FROM _Device d LEFT JOIN d.borrowedMember m WHERE 1=1");
@@ -155,7 +167,7 @@ public class DAO_UsageInformation {
         }
         return new ArrayList<>();
     }
-    
+
 //    public List getAllUsageInformationByTime(Date joinTime,Date leaveTime) {
 //        List<_UsageInformation> usageInformationList = null;
 //        try {
@@ -172,7 +184,6 @@ public class DAO_UsageInformation {
 //        }
 //        return usageInformationList;
 //    }
-    
     public List<Object[]> getAllUsageInformation(String memberId, String memberName, String deviceId, String deviceName, Date joinStartTime, Date joinEndTime, Date borrowedTime, Date returnTime) {
         try {
             StringBuilder jpql = new StringBuilder("SELECT u FROM _UsageInformation u JOIN u.maTV m JOIN u.maTB d WHERE 1=1");
@@ -224,8 +235,8 @@ public class DAO_UsageInformation {
         }
         return new ArrayList<>();
     }
-    
-    public Boolean leaveStudyArea(_Member member){
+
+    public Boolean leaveStudyArea(_Member member) {
         try {
             session.beginTransaction();
 
@@ -245,7 +256,7 @@ public class DAO_UsageInformation {
         }
         return false;
     }
-    
+
     public Boolean borrowDevice(_Member member, _Device device) {
         try {
             session.beginTransaction();
@@ -267,4 +278,18 @@ public class DAO_UsageInformation {
         }
         return false;
     }
+
+
+    public List<_UsageInformation> getStudyAreaHistory(Date startTime, Date endTime) {
+        String hql = "FROM _UsageInformation u "
+                + "WHERE u.tGMuon IS NULL AND u.tGTra IS NULL "
+                + "AND (:startTime IS NULL OR u.tGVao >= :startTime) "
+                + "AND (:endTime IS NULL OR u.tGVao <= :endTime)  "
+                + "ORDER BY u.tGVao DESC";
+        Query<_UsageInformation> query = session.createQuery(hql, _UsageInformation.class);
+        query.setParameter("startTime", startTime);
+        query.setParameter("endTime", endTime);
+        return query.getResultList();
+    }
+
 }

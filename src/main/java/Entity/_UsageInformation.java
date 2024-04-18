@@ -18,6 +18,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -118,6 +119,15 @@ public class _UsageInformation implements Serializable {
         return hash;
     }
 
+    public String getTGString() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyy HH:mm");
+            return sdf.format(tGVao);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -135,5 +145,5 @@ public class _UsageInformation implements Serializable {
     public String toString() {
         return "Entity._UsageInformation[ maTT=" + maTT + " ]";
     }
-    
+
 }

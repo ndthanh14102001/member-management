@@ -75,7 +75,7 @@ public class DAO_Member {
         }
         return new ArrayList<>();
     }
-
+   
     public void addMember(_Member member) throws Exception {
         member.checkMaTVFormat();
         member.checkEmailFormat();
