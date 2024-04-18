@@ -15,24 +15,29 @@ import java.util.List;
  */
 public class BUS_Processing {
     private DAO_Processing dao;
-    public BUS_Processing () {
+
+    public BUS_Processing() {
         dao = new DAO_Processing();
     }
-    public List getAllProcessing(){
-    return dao.getAllProcessing();
-    }
-     public boolean createProcess(_Processing processing) {
-    return dao.createProcess(processing);
-    }
-    public boolean updateProcess(_Processing processing) {
-    return dao.updateProcess(processing);
-    }
-    public boolean deleteProcess(_Processing processing) {
-    return dao.deleteProcess(processing);
-    }
-    public List<Object[]> getAllProcessing(String type, LocalDate startDate, LocalDate endDate) {
-    return dao.getAllProcessing(type, startDate, endDate);
+
+    public List getAllProcessing() {
+        return dao.getAllProcessing();
     }
 
+    public boolean createProcess(_Processing processing) {
+        return dao.createProcess(processing);
+    }
+
+    public boolean updateProcess(_Processing processing) {
+        return dao.updateProcess(processing);
+    }
+
+    public boolean deleteProcess(_Processing processing) {
+        return dao.deleteProcess(processing);
+    }
+
+    public List<Object[]> getProcessingList(String type, LocalDate startDate, LocalDate endDate) {
+        return dao.getProcessingList(type, startDate, endDate);
+    }
     
 }

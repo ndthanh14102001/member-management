@@ -6,7 +6,6 @@ package DAO;
 
 import Entity._Processing;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
@@ -60,10 +59,10 @@ public class DAO_Processing {
             query.setParameter("sT", processing.getSoTien());
             query.setParameter("ttXL", processing.getTrangThaiXL());
             query.setParameter("maXL", processing.getMaXL());
-
+            
             int rowsUpdated = query.executeUpdate();
-
-            if (rowsUpdated > 0) {
+            
+            if(rowsUpdated > 0) {
                 return true;
             }
         } catch (Exception e) {
@@ -73,7 +72,7 @@ public class DAO_Processing {
         }
         return false;
     }
-
+    
     public boolean deleteProcess(_Processing processing) {
         try {
             session.beginTransaction();
@@ -91,36 +90,32 @@ public class DAO_Processing {
         }
         return false;
     }
-
-    public List<Object[]> getAllProcessing(String type, LocalDate startDate, LocalDate endDate) {
+    
+    public List<Object[]> getProcessingList(String type, LocalDate startDate, LocalDate endDate){
         try {
-            StringBuilder jpql = new StringBuilder("SELECT p FROM _Processing p WHERE 1=1");
+            StringBuilder jpql = new StringBuilder("SELECT p FROM _Processing p JOIN p.maTV m WHERE 1=1");
             boolean hasType = type != null && !type.isEmpty();
-            boolean hasStartDate = startDate != null;
-            boolean hasEndDate = endDate != null;
+            boolean hasStartDate = startDate != null && startDate != null;
+            boolean hasEndDate = endDate != null && endDate != null;
 
             if (hasType) {
-                jpql.append(" AND p.type = :type");
+                jpql.append(" AND p.hinhThucXL = :type");
             } else if (hasStartDate && hasEndDate) {
-                jpql.append(" AND p.processingDate BETWEEN :startDate AND :endDate");
-            } else if (hasStartDate) {
-                jpql.append(" AND p.processingDate >= :startDate");
-            } else if (hasEndDate) {
-                jpql.append(" AND p.processingDate <= :endDate");
+                jpql.append("AND p.ngayXL BETWEEN :startDate AND :endDate");
             }
 
             Query<Object[]> query = session.createQuery(jpql.toString(), Object[].class);
 
             if (hasType) {
                 query.setParameter("type", type);
-            } else if (hasStartDate) {
-                query.setParameter("startDate", startDate.atStartOfDay());
-            } else if (hasEndDate) {
-                query.setParameter("endDate", endDate.atTime(LocalTime.MAX));
+            } else if (hasStartDate && hasEndDate) {
+                query.setParameter("startDate", startDate);
+                query.setParameter("endDate", endDate);
             }
 
             List<Object[]> results = query.getResultList();
             return results;
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
