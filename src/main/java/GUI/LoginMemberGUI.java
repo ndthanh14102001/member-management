@@ -51,46 +51,45 @@ public class LoginMemberGUI extends javax.swing.JFrame {
     }
 
     private void displayDataInTable1() {
-    // Xóa dữ liệu cũ
-    model1.setRowCount(0);
+        // Xóa dữ liệu cũ
+        model1.setRowCount(0);
 
-    // Lấy dữ liệu từ bảng 1 và thêm vào model1
-    DAO_Member daoMember = new DAO_Member();
-    List<Object[]> memberList = daoMember.getAllMembers();
+        // Lấy dữ liệu từ bảng 1 và thêm vào model1
+        DAO_Member daoMember = new DAO_Member();
+        List<Object[]> memberList = daoMember.getAllMembers("", "", "");
 
-    if (memberList != null) {
-        for (Object[] memberData : memberList) {
-            _Member mem = (_Member) memberData[0];
-            String processingStatus = (String) memberData[1];
-            // Thêm dữ liệu vào model1
-            model1.addRow(new Object[]{
-                mem.getMaTV(),
-                mem.getHoTen(),
-                mem.getKhoa(),
-                mem.getNganh(),
-                mem.getSdt(),
-                processingStatus // Thêm trạng thái xử lý vào cột cuối cùng
+        if (memberList != null) {
+            for (Object[] memberData : memberList) {
+                _Member mem = (_Member) memberData[0];
+                String processingStatus = (String) memberData[1];
+                // Thêm dữ liệu vào model1
+                model1.addRow(new Object[]{
+                    mem.getMaTV(),
+                    mem.getHoTen(),
+                    mem.getKhoa(),
+                    mem.getNganh(),
+                    mem.getSdt(),
+                    processingStatus // Thêm trạng thái xử lý vào cột cuối cùng
+                });
+            }
+        }
+    }
+
+    private void displayDataInTable2() {
+        // Xóa dữ liệu cũ
+        model2.setRowCount(0);
+
+        // Lấy dữ liệu từ bảng thiết bị và thêm vào model2
+        DAO_Device daoDevice = new DAO_Device();
+        List<_Device> deviceList = daoDevice.getAllDevices();
+        for (_Device device : deviceList) {
+            model2.addRow(new Object[]{
+                device.getMaTB(),
+                device.getTenTB(),
+                device.getMoTaTB()
             });
         }
     }
-}
-
-
-private void displayDataInTable2() {
-    // Xóa dữ liệu cũ
-    model2.setRowCount(0);
-
-    // Lấy dữ liệu từ bảng thiết bị và thêm vào model2
-    DAO_Device daoDevice = new DAO_Device();
-    List<_Device> deviceList = daoDevice.getAllDevices();
-    for (_Device device : deviceList) {
-        model2.addRow(new Object[]{
-            device.getMaTB(),
-            device.getTenTB(),
-            device.getMoTaTB()
-        });
-    }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.

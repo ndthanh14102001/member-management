@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  * @author a410
  */
 public class LogoutGUI extends javax.swing.JFrame {
-    
+
     private DefaultTableModel model;
 
     public LogoutGUI() {
@@ -27,36 +27,35 @@ public class LogoutGUI extends javax.swing.JFrame {
         model.addColumn("Ngành");
         model.addColumn("Số Điện Thoại");
         model.addColumn("XLVP");
-        
 
         jTable1.setModel(model);
         displayDataInTable();
     }
+
     private void displayDataInTable() {
-    // Xóa dữ liệu cũ
-    model.setRowCount(0);
+        // Xóa dữ liệu cũ
+        model.setRowCount(0);
 
-    // Lấy dữ liệu từ bảng 1 và thêm vào model1
-    DAO_Member daoMember = new DAO_Member();
-    List<Object[]> memberList = daoMember.getAllMembers();
+        // Lấy dữ liệu từ bảng 1 và thêm vào model1
+        DAO_Member daoMember = new DAO_Member();
+        List<Object[]> memberList = daoMember.getAllMembers("", "", "");
 
-    if (memberList != null) {
-        for (Object[] memberData : memberList) {
-            _Member mem = (_Member) memberData[0];
-            String processingStatus = (String) memberData[0];
-            // Thêm dữ liệu vào model1
-            model.addRow(new Object[]{
-                mem.getMaTV(),
-                mem.getHoTen(),
-                mem.getKhoa(),
-                mem.getNganh(),
-                mem.getSdt(),
-                processingStatus // Thêm trạng thái xử lý vào cột cuối cùng
-            });
+        if (memberList != null) {
+            for (Object[] memberData : memberList) {
+                _Member mem = (_Member) memberData[0];
+                String processingStatus = (String) memberData[0];
+                // Thêm dữ liệu vào model1
+                model.addRow(new Object[]{
+                    mem.getMaTV(),
+                    mem.getHoTen(),
+                    mem.getKhoa(),
+                    mem.getNganh(),
+                    mem.getSdt(),
+                    processingStatus // Thêm trạng thái xử lý vào cột cuối cùng
+                });
+            }
         }
     }
-}
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -151,7 +150,7 @@ public class LogoutGUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */

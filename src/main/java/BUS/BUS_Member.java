@@ -20,35 +20,23 @@ public class BUS_Member {
         this.memberDAO = new DAO_Member();
     }
 
-    public List<Object[]> getAllMembers() {
-        return memberDAO.getAllMembers();
+    public List<Object[]> getAllMembers(String memberId, String department, String majors) {
+        return memberDAO.getAllMembers(memberId, department, majors);
     }
 //Example
-//     List<Object[]> results = new BUS_Member().getAllMembers();
+//        List<Object[]> results = new BUS_Member().getAllMembers("00017CNTTSPTH", "", "SPTH");
 //        for (Object[] result : results) {
 //            _Member mebmer = (_Member) result[0];
 //            String trangThai = (String) result[1];
 //            System.out.println(mebmer.getMaTV() + " " + trangThai);
 //        }
 
-    public List<Object[]> getMembersById(int memberId) {
-        return memberDAO.getMembersById(memberId);
+    public void addMember(_Member member) throws Exception {
+        memberDAO.addMember(member);
     }
 
-    public List<Object[]> getMembersByDepartment(String department) {
-        return memberDAO.getMembersByDepartment(department);
-    }
-
-    public List<Object[]> getMembersByMajors(String majors) {
-        return memberDAO.getMembersByMajors(majors);
-    }
-
-    public boolean addMember(_Member member) {
-        return memberDAO.addMember(member);
-    }
-
-    public boolean addMembers(List<_Member> members) {
-        return memberDAO.addMembers(members);
+    public void addMembers(List<_Member> members) throws Exception {
+        memberDAO.addMembers(members);
     }
 
     public boolean updateMember(String memberId, _Member memberInfo) {
