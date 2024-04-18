@@ -29,15 +29,16 @@ public class DAO_Member {
 
     }
 
-    public List<Object[]> getAllMembers(String memberId, String department, String majors) {
+    public List<Object[]> getAllMembers(String memberId, String department, String majors, String year) {
         try {
             StringBuilder jpql = new StringBuilder("SELECT m, CASE WHEN COUNT(p) > 0 AND SUM(CASE WHEN p.trangThaiXL = 0 THEN 1 ELSE 0 END) > 0 THEN 'Chưa xử lý' ELSE '' END "
                     + "FROM _Member m LEFT JOIN m.processings p ");
             boolean hasMemberId = !memberId.isEmpty();
             boolean hasDepartment = !department.isEmpty();
             boolean hasMajors = !majors.isEmpty();
+            boolean hasYear = !year.isEmpty();
 
-            if (hasDepartment || hasMajors || hasMemberId) {
+            if (hasDepartment || hasMajors || hasMemberId || hasYear) {
                 jpql.append(" WHERE");
                 if (hasDepartment) {
                     jpql.append(" m.khoa LIKE :khoa");
@@ -54,6 +55,12 @@ public class DAO_Member {
                     }
                     jpql.append(" m.maTV = :maTV");
                 }
+                if (hasYear) {
+                    if (hasDepartment || hasMajors || hasMemberId) {
+                        jpql.append(" AND");
+                    }
+                    jpql.append(" SUBSTRING(m.maTV, 1, 4) = :year");
+                }
             }
             jpql.append(" GROUP BY m");
             Query<Object[]> query = session.createQuery(jpql.toString(), Object[].class);
@@ -68,6 +75,11 @@ public class DAO_Member {
             if (hasMajors) {
                 query.setParameter("nganh", "%" + majors + "%");
             }
+
+            if (hasYear) {
+                query.setParameter("year", year);
+            }
+
             List<Object[]> results = query.getResultList();
             return results;
         } catch (Exception e) {
@@ -75,12 +87,12 @@ public class DAO_Member {
         }
         return new ArrayList<>();
     }
-   
+
     public void addMember(_Member member) throws Exception {
         member.checkMaTVFormat();
         member.checkEmailFormat();
-        member.setKhoa(member.getKhoaById());
-        member.setNganh(member.getNganhById());
+//        member.setKhoa(member.getKhoaById());
+//        member.setNganh(member.getNganhById());
         if (isMaTVExists(member.getMaTV())) {
             throw new Exception("Mã thành viên " + member.getMaTV() + " đã tồn tại");
         }
@@ -111,8 +123,8 @@ public class DAO_Member {
             transaction = session.beginTransaction();
             for (_Member member : members) {
                 member.checkMaTVFormat();
-                member.setKhoa(member.getKhoaById());
-                member.setNganh(member.getNganhById());
+//                member.setKhoa(member.getKhoaById());
+//                member.setNganh(member.getNganhById());
                 if (isMaTVExists(member.getMaTV())) {
                     transaction.rollback();
                     throw new Exception("Mã thành viên " + member.getMaTV() + " đã tồn tại");
@@ -130,8 +142,8 @@ public class DAO_Member {
 
     public void updateMember(_Member member) throws Exception {
         member.checkEmailFormat();
-        member.setKhoa(member.getKhoaById());
-        member.setNganh(member.getNganhById());
+//        member.setKhoa(member.getKhoaById());
+//        member.setNganh(member.getNganhById());
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -179,7 +191,7 @@ public class DAO_Member {
                     throw new SQLException("Mã TV " + memberId + " không thể xóa.");
                 }
             }
-            
+
             String jpql = "DELETE FROM _Member WHERE maTV IN :memberIds";
             int rowsAffected = session.createQuery(jpql)
                     .setParameterList("memberIds", memberIds)

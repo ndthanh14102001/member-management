@@ -90,22 +90,20 @@ public class _Member implements Serializable {
         return khoa;
     }
 
-    public String getKhoaById() {
-        try {
-            return maTV.substring(5, 9);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    public String getKhoaById(String maTV) {
-        try {
-            return maTV.substring(5, 9);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
+//    public String getKhoaById() {
+//        try {
+//            return maTV.substring(5, 9);
+//        } catch (Exception e) {
+//            return "";
+//        }
+//    }
+//    public String getKhoaById(String maTV) {
+//        try {
+//            return maTV.substring(5, 9);
+//        } catch (Exception e) {
+//            return "";
+//        }
+//    }
     public void setKhoa(String khoa) {
         this.khoa = khoa;
     }
@@ -114,14 +112,13 @@ public class _Member implements Serializable {
         return nganh;
     }
 
-    public String getNganhById() {
-        try {
-            return maTV.substring(9);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
+//    public String getNganhById() {
+//        try {
+//            return maTV.substring(9);
+//        } catch (Exception e) {
+//            return "";
+//        }
+//    }
     public String getNganhById(String maTV) {
         try {
             return maTV.substring(9);
@@ -152,21 +149,20 @@ public class _Member implements Serializable {
 
     public String getSTTById() {
         try {
-            return maTV.substring(0, 5);
+            return maTV.substring(4);
         } catch (Exception e) {
             return "";
         }
     }
 
     public void checkMaTVFormat() throws Exception {
-        if (maTV == null || maTV.length() != 13) {
-            throw new Exception("Mã TV phải có độ dài 13 ký tự.");
+        if (maTV == null || maTV.length() != 8) {
+            throw new Exception("Mã TV phải có độ dài 8 ký tự.");
         }
-        String stt = getSTTById();
         try {
-            int sttInt = Integer.parseInt(stt);
+            Integer.parseInt(maTV);
         } catch (NumberFormatException e) {
-            throw new Exception("Số thứ tự (5 ký tự đầu) phải là số.");
+            throw new Exception("Mã thành viên phải là số.");
         }
     }
 

@@ -44,7 +44,7 @@ public class GUI_SelectMemberToBorrowDevice extends javax.swing.JFrame {
         model.setRowCount(0);
 
         // Lấy dữ liệu từ bảng 1 và thêm vào model1
-        List<Object[]> memberList = bus_member.getAllMembers("", "", "");
+        List<Object[]> memberList = bus_member.getAllMembers("", "", "", "");
 
         if (memberList != null) {
             for (Object[] memberData : memberList) {

@@ -20,35 +20,6 @@ public class GUI_AddMember extends javax.swing.JFrame {
      */
     public GUI_AddMember() {
         initComponents();
-        addOnChangeMaTVEvent();
-    }
-
-    private void addOnChangeMaTVEvent() {
-        txtMaTV.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                // Xử lý khi có sự thay đổi trong văn bản (khi có chèn văn bản)
-                handleTextChange();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                // Xử lý khi có sự thay đổi trong văn bản (khi có xóa văn bản)
-                handleTextChange();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // Xử lý khi có sự thay đổi trong văn bản (khi có thay đổi thuộc tính văn bản khác)
-                handleTextChange();
-            }
-
-            private void handleTextChange() {
-                // Lấy giá trị mới của JTextField khi giá trị thay đổi
-                txtMajors.setText(new _Member().getNganhById(txtMaTV.getText()));
-                txtDepartment.setText(new _Member().getKhoaById(txtMaTV.getText()));
-            }
-        });
     }
 
     /**
@@ -72,9 +43,9 @@ public class GUI_AddMember extends javax.swing.JFrame {
         txtPhoneNumber = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
-        txtDepartment = new javax.swing.JLabel();
-        txtMajors = new javax.swing.JLabel();
         txtMaTV = new javax.swing.JTextField();
+        txtDepartment = new javax.swing.JTextField();
+        txtMajors = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -128,11 +99,11 @@ public class GUI_AddMember extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMajors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtMajors))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtDepartment))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -162,15 +133,15 @@ public class GUI_AddMember extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtDepartment))
+                    .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtMajors))
-                .addGap(27, 27, 27)
+                    .addComponent(txtMajors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -185,7 +156,7 @@ public class GUI_AddMember extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtDepartment, txtEmail, txtFullName, txtMajors, txtPhoneNumber});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtEmail, txtFullName, txtPhoneNumber});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -197,14 +168,15 @@ public class GUI_AddMember extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-       try {
+        try {
             _Member member = new _Member();
             member.setEmail(txtEmail.getText());
             member.setPassword(txtPhoneNumber.getText());
             member.setHoTen(txtFullName.getText());
             member.setMaTV(txtMaTV.getText());
             member.setSdt(txtPhoneNumber.getText());
-
+            member.setKhoa(txtDepartment.getText());
+            member.setNganh(txtMajors.getText());
             new BUS.BUS_Member().addMember(member);
             JOptionPane.showMessageDialog(null, "Thêm thành viên thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
@@ -257,11 +229,11 @@ public class GUI_AddMember extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     public javax.swing.JLabel labelTitle;
-    private javax.swing.JLabel txtDepartment;
+    private javax.swing.JTextField txtDepartment;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFullName;
     private javax.swing.JTextField txtMaTV;
-    private javax.swing.JLabel txtMajors;
+    private javax.swing.JTextField txtMajors;
     private javax.swing.JTextField txtPhoneNumber;
     // End of variables declaration//GEN-END:variables
 }

@@ -21,8 +21,8 @@ public class BUS_Member {
         this.memberDAO = new DAO_Member();
     }
 
-    public List<Object[]> getAllMembers(String memberId, String department, String majors) {
-        return memberDAO.getAllMembers(memberId, department, majors);
+    public List<Object[]> getAllMembers(String memberId, String department, String majors,String year) {
+        return memberDAO.getAllMembers(memberId, department, majors, year);
     }
 //Example
 //        List<Object[]> results = new BUS_Member().getAllMembers("00017CNTTSPTH", "", "SPTH");

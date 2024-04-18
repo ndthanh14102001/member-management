@@ -56,7 +56,7 @@ public class GUI_Processing extends javax.swing.JFrame {
 
     private void displayMemberIDs() {
         BUS_Member busMember = new BUS_Member();
-        List<Object[]> members = busMember.getAllMembers("", "", "");
+        List<Object[]> members = busMember.getAllMembers("", "", "", "");
 
         // Xóa tất cả các mục đã tồn tại trong JComboBox8
         jComboBox8.removeAllItems();

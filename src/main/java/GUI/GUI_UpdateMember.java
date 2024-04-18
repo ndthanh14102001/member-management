@@ -27,10 +27,10 @@ public class GUI_UpdateMember extends javax.swing.JFrame {
     private void showData() {
         txtMaTV.setText(this.member.getMaTV());
         txtFullName.setText(this.member.getHoTen());
-        txtDepartment.setText(this.member.getKhoaById());
-        txtMajors.setText(this.member.getNganhById());
         txtPhoneNumber.setText(this.member.getSdt());
         txtEmail.setText(this.member.getEmail());
+        txtDepartment.setText(this.member.getKhoa());
+        txtMajors.setText(this.member.getNganh());
     }
 
     /**
@@ -55,8 +55,8 @@ public class GUI_UpdateMember extends javax.swing.JFrame {
         btnCancel = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         txtMaTV = new javax.swing.JLabel();
-        txtDepartment = new javax.swing.JLabel();
-        txtMajors = new javax.swing.JLabel();
+        txtDepartment = new javax.swing.JTextField();
+        txtMajors = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -110,11 +110,11 @@ public class GUI_UpdateMember extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMajors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtMajors))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtDepartment))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -132,7 +132,7 @@ public class GUI_UpdateMember extends javax.swing.JFrame {
                 .addGap(35, 35, 35))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtDepartment, txtEmail, txtFullName, txtMaTV, txtMajors, txtPhoneNumber});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtEmail, txtFullName, txtMaTV, txtPhoneNumber});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,15 +147,15 @@ public class GUI_UpdateMember extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtFullName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtDepartment))
+                    .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtMajors))
-                .addGap(27, 27, 27)
+                    .addComponent(txtMajors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -170,7 +170,7 @@ public class GUI_UpdateMember extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtDepartment, txtEmail, txtFullName, txtMaTV, txtMajors, txtPhoneNumber});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtEmail, txtFullName, txtMaTV, txtPhoneNumber});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -183,10 +183,11 @@ public class GUI_UpdateMember extends javax.swing.JFrame {
             member.setEmail(txtEmail.getText());
             member.setHoTen(txtFullName.getText());
             member.setSdt(txtPhoneNumber.getText());
-            member.setKhoa(this.member.getKhoa());
-            member.setNganh(this.member.getNganh());
+            member.setKhoa(txtDepartment.getText());
+            member.setNganh(txtMajors.getText());
+
             member.setPassword(this.member.getPassword());
-            
+
             new BUS.BUS_Member().updateMember(member);
             JOptionPane.showMessageDialog(null, "Cập nhật thành viên thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
@@ -245,11 +246,11 @@ public class GUI_UpdateMember extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     public javax.swing.JLabel labelTitle;
-    private javax.swing.JLabel txtDepartment;
+    private javax.swing.JTextField txtDepartment;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtFullName;
     private javax.swing.JLabel txtMaTV;
-    private javax.swing.JLabel txtMajors;
+    private javax.swing.JTextField txtMajors;
     private javax.swing.JTextField txtPhoneNumber;
     // End of variables declaration//GEN-END:variables
 }

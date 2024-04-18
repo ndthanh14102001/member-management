@@ -55,7 +55,7 @@ public class GUI_JoinStudyArea extends javax.swing.JFrame {
         model1.setRowCount(0);
 
         // Lấy dữ liệu từ bảng 1 và thêm vào model1
-        List<Object[]> memberList = new BUS.BUS_Member().getAllMembers(txtMaTV.getText(), "", "");
+        List<Object[]> memberList = new BUS.BUS_Member().getAllMembers(txtMaTV.getText(), "", "", "");
 
         if (memberList != null) {
             for (Object[] memberData : memberList) {
