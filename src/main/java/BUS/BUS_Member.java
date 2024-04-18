@@ -6,6 +6,7 @@ package BUS;
 
 import DAO.DAO_Member;
 import Entity._Member;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -39,16 +40,15 @@ public class BUS_Member {
         memberDAO.addMembers(members);
     }
 
-    public boolean updateMember(String memberId, _Member memberInfo) {
-        memberInfo.setMaTV(memberId);
-        return memberDAO.updateMember(memberInfo);
+    public void updateMember(_Member memberInfo) throws Exception {
+        memberDAO.updateMember(memberInfo);
     }
 
     public boolean deleteMember(int memberId) {
         return memberDAO.deleteMember(memberId);
     }
 
-    public boolean deleteMembers(List<Integer> memberIds) {
-        return memberDAO.deleteMembers(memberIds);
+    public void deleteMembers(List<String> memberIds) throws SQLException {
+        memberDAO.deleteMembers(memberIds);
     }
 }

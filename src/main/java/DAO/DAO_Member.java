@@ -5,10 +5,10 @@
 package DAO;
 
 import Entity._Member;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Persistence;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -37,7 +37,7 @@ public class DAO_Member {
             boolean hasDepartment = !department.isEmpty();
             boolean hasMajors = !majors.isEmpty();
 
-            if (hasDepartment || hasMajors) {
+            if (hasDepartment || hasMajors || hasMemberId) {
                 jpql.append(" WHERE");
                 if (hasDepartment) {
                     jpql.append(" m.khoa LIKE :khoa");
@@ -72,14 +72,13 @@ public class DAO_Member {
             return results;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            session.close();
         }
         return new ArrayList<>();
     }
 
     public void addMember(_Member member) throws Exception {
         member.checkMaTVFormat();
+        member.checkEmailFormat();
         member.setKhoa(member.getKhoaById());
         member.setNganh(member.getNganhById());
         if (isMaTVExists(member.getMaTV())) {
@@ -95,8 +94,6 @@ public class DAO_Member {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
@@ -128,12 +125,13 @@ public class DAO_Member {
                 transaction.rollback();
             }
             throw e;
-        } finally {
-            session.close();
         }
     }
 
-    public boolean updateMember(_Member member) {
+    public void updateMember(_Member member) throws Exception {
+        member.checkEmailFormat();
+        member.setKhoa(member.getKhoaById());
+        member.setNganh(member.getNganhById());
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -144,11 +142,8 @@ public class DAO_Member {
                 transaction.rollback();
             }
             e.printStackTrace();
-            return false;
-        } finally {
-            session.close();
+            throw e;
         }
-        return true;
     }
 
     public boolean deleteMember(int memberId) {
@@ -171,25 +166,66 @@ public class DAO_Member {
         }
     }
 
-    public boolean deleteMembers(List<Integer> memberIds) {
+    public void deleteMembers(List<String> memberIds) throws SQLException {
         Transaction transaction = null;
 
         try {
             transaction = session.beginTransaction();
+            // Kiểm tra xem có dữ liệu liên kết với thành viên đó không
+            for (String memberId : memberIds) {
+                boolean hasRelatedData = checkRelatedData(memberId); // Phương thức này cần được triển khai để kiểm tra dữ liệu liên kết
+
+                if (hasRelatedData) {
+                    throw new SQLException("Mã TV " + memberId + " không thể xóa.");
+                }
+            }
+            
             String jpql = "DELETE FROM _Member WHERE maTV IN :memberIds";
-            session.createQuery(jpql)
+            int rowsAffected = session.createQuery(jpql)
                     .setParameterList("memberIds", memberIds)
                     .executeUpdate();
             transaction.commit();
-            return true;
-        } catch (RuntimeException e) {
+
+            // Kiểm tra xem có bản ghi nào đã bị xóa không
+            if (rowsAffected != memberIds.size()) {
+                throw new SQLException("Mã TV " + memberIds.get(rowsAffected) + " không thể xóa.");
+            }
+        } catch (HibernateException e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
             e.printStackTrace();
-            return false;
-        } finally {
-            session.close();
+            throw new RuntimeException(e.getMessage());
+        } catch (SQLException e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            throw new SQLException(e.getMessage());
+        }
+    }
+
+    public boolean checkRelatedData(String memberId) {
+        try {
+            // Kiểm tra dữ liệu liên kết trong entity _Processing
+            String jpqlProcessing = "SELECT COUNT(p) FROM _Processing p WHERE p.maTV.maTV = :memberId";
+            Query<Long> queryProcessing = session.createQuery(jpqlProcessing, Long.class);
+            queryProcessing.setParameter("memberId", memberId);
+            Long countProcessing = queryProcessing.getSingleResult();
+            if (countProcessing > 0) {
+                return true;
+            }
+
+            // Kiểm tra dữ liệu liên kết trong entity _UsageInformation
+            String jpqlUsage = "SELECT COUNT(u) FROM _UsageInformation u WHERE u.maTV.maTV = :memberId";
+            Query<Long> queryUsage = session.createQuery(jpqlUsage, Long.class);
+            queryUsage.setParameter("memberId", memberId);
+            Long countUsage = queryUsage.getSingleResult();
+            // Trả về false nếu không có dữ liệu liên kết
+            return countUsage > 0;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Lỗi khi kiểm tra dữ liệu liên kết.");
         }
     }
 }

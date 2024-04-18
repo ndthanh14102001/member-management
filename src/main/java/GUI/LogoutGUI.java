@@ -43,7 +43,7 @@ public class LogoutGUI extends javax.swing.JFrame {
         if (memberList != null) {
             for (Object[] memberData : memberList) {
                 _Member mem = (_Member) memberData[0];
-                String processingStatus = (String) memberData[0];
+                String processingStatus = (String) memberData[1];
                 // Thêm dữ liệu vào model1
                 model.addRow(new Object[]{
                     mem.getMaTV(),

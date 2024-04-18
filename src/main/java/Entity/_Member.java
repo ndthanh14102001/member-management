@@ -17,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -32,6 +33,13 @@ import java.util.List;
     @NamedQuery(name = "_Member.findByNganh", query = "SELECT _ FROM _Member _ WHERE _.nganh = :nganh"),
     @NamedQuery(name = "_Member.findBySdt", query = "SELECT _ FROM _Member _ WHERE _.sdt = :sdt")})
 public class _Member implements Serializable {
+
+    @Basic(optional = false)
+    @Column(name = "Email")
+    private String email;
+    @Basic(optional = false)
+    @Column(name = "Password")
+    private String password;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -90,6 +98,14 @@ public class _Member implements Serializable {
         }
     }
 
+    public String getKhoaById(String maTV) {
+        try {
+            return maTV.substring(5, 9);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public void setKhoa(String khoa) {
         this.khoa = khoa;
     }
@@ -99,6 +115,14 @@ public class _Member implements Serializable {
     }
 
     public String getNganhById() {
+        try {
+            return maTV.substring(9);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getNganhById(String maTV) {
         try {
             return maTV.substring(9);
         } catch (Exception e) {
@@ -146,6 +170,23 @@ public class _Member implements Serializable {
         }
     }
 
+    public void checkEmailFormat() throws Exception {
+        if (!this.isValidEmail(email)) {
+            throw new Exception("Email không hợp lệ");
+        }
+    }
+
+    private boolean isValidEmail(String email) {
+        // Biểu thức chính quy để kiểm tra tính hợp lệ của email
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+        // Tạo một đối tượng Pattern từ biểu thức chính quy
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // Kiểm tra xem email có khớp với biểu thức chính quy không
+        return pattern.matcher(email).matches();
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -173,6 +214,22 @@ public class _Member implements Serializable {
 
     public int getTrangThaiVP() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
