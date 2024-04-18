@@ -55,8 +55,8 @@ public class BUS_UsageInformation {
         return dao.returnDevice(device);
     }
 
-    public List<_UsageInformation> getStudyAreaHistory(Date startTime, Date endTime) {
-        return dao.getStudyAreaHistory(startTime, endTime);
+    public List<_UsageInformation> getStudyAreaHistory(Date startTime, Date endTime, String department, String majors) {
+        return dao.getStudyAreaHistory(startTime, endTime, department, majors);
     }
 
     public List<Object[]> getNotAvailableDevices() {

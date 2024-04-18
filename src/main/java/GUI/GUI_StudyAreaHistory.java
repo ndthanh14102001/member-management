@@ -33,8 +33,8 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
 
         initComponents();
         initValue();
-        //onChangeDateChooserEvent();
         displayDataInTable();
+
     }
 
     private void initValue() {
@@ -50,28 +50,6 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
         model.addColumn("Email");
         model.addColumn("Thời gian vào");
         tbMembers.setModel(model);
-    }
-
-    private void onChangeDateChooserEvent() {
-        dcStartDate.addPropertyChangeListener("date", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if ("date".equals(evt.getPropertyName())) {
-                    Date selectedDate = (Date) evt.getNewValue();
-                    displayDataInTable();
-                }
-            }
-        });
-        dcEndDate.addPropertyChangeListener("date", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if ("date".equals(evt.getPropertyName())) {
-                    Date selectedDate = (Date) evt.getNewValue();
-                    // Xử lý sự kiện khi ngày được chọn thay đổi
-                    displayDataInTable();
-                }
-            }
-        });
     }
 
     private void displayDataInTable() {
@@ -90,7 +68,7 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
         end.setMinutes((int) spEndMin.getValue());
         end.setSeconds(59);
 
-        List<_UsageInformation> usageInformations = busUsageInformation.getStudyAreaHistory(start, end);
+        List<_UsageInformation> usageInformations = busUsageInformation.getStudyAreaHistory(start, end, txtKhoa.getText(), txtNganh.getText());
 
         if (usageInformations != null) {
             for (_UsageInformation usageInformation : usageInformations) {
@@ -109,6 +87,49 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
                 });
             }
         }
+    }
+
+    private void addOnChangeFilterEvent() {
+        txtKhoa.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có chèn văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có xóa văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có thay đổi thuộc tính văn bản khác)
+                displayDataInTable();
+            }
+
+        });
+        txtNganh.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có chèn văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có xóa văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có thay đổi thuộc tính văn bản khác)
+                displayDataInTable();
+            }
+
+        });
     }
 
     /**
@@ -135,7 +156,11 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         spEndHour = new javax.swing.JSpinner();
         spEndMin = new javax.swing.JSpinner();
-        jButton1 = new javax.swing.JButton();
+        btnFilter = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txtKhoa = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtNganh = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,7 +205,16 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
 
         jLabel10.setText(":");
 
-        jButton1.setText("Lọc");
+        btnFilter.setText("Lọc");
+        btnFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFilterActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Khoa");
+
+        jLabel5.setText("Ngành");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -199,27 +233,38 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(dcStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spStartHour, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spStartMin, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(dcStartDate, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spStartHour, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spStartMin, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtKhoa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dcEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spEndHour, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spEndMin, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(dcEndDate, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spEndHour, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spEndMin, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnFilter))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNganh)))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -227,7 +272,18 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
-                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(dcStartDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -237,7 +293,7 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addComponent(spEndHour, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(spEndMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1))
+                        .addComponent(btnFilter))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
@@ -252,7 +308,9 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {dcEndDate, dcStartDate, jButton1, jLabel10, jLabel2, jLabel3, jLabel8, spEndHour, spEndMin, spStartHour, spStartMin});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnFilter, dcEndDate, dcStartDate, jLabel10, jLabel2, jLabel3, jLabel8, spEndHour, spEndMin, spStartHour, spStartMin});
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel4, txtKhoa});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -266,6 +324,11 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
         // TODO add your handling code here:
         displayDataInTable();
     }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void btnFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFilterActionPerformed
+        // TODO add your handling code here:
+        displayDataInTable();
+    }//GEN-LAST:event_btnFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,15 +367,17 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnJoinStudyArea;
     private javax.swing.JButton btnRefresh;
     private com.toedter.calendar.JDateChooser dcEndDate;
     private com.toedter.calendar.JDateChooser dcStartDate;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner spEndHour;
@@ -320,5 +385,7 @@ public class GUI_StudyAreaHistory extends javax.swing.JFrame {
     private javax.swing.JSpinner spStartHour;
     private javax.swing.JSpinner spStartMin;
     private javax.swing.JTable tbMembers;
+    private javax.swing.JTextField txtKhoa;
+    private javax.swing.JTextField txtNganh;
     // End of variables declaration//GEN-END:variables
 }

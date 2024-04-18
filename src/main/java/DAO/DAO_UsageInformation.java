@@ -361,15 +361,38 @@ public class DAO_UsageInformation {
         return false;
     }
 
-    public List<_UsageInformation> getStudyAreaHistory(Date startTime, Date endTime) {
-        String hql = "FROM _UsageInformation u "
+    public List<_UsageInformation> getStudyAreaHistory(Date startTime, Date endTime, String department, String majors) {
+        StringBuilder hql = new StringBuilder("FROM _UsageInformation u "
                 + "WHERE u.tGMuon IS NULL AND u.tGTra IS NULL "
                 + "AND (:startTime IS NULL OR u.tGVao >= :startTime) "
-                + "AND (:endTime IS NULL OR u.tGVao <= :endTime)  "
-                + "ORDER BY u.tGVao DESC";
-        Query<_UsageInformation> query = session.createQuery(hql, _UsageInformation.class);
+                + "AND (:endTime IS NULL OR u.tGVao <= :endTime) ");
+        boolean hasDepartment = !department.isEmpty();
+        boolean hasMajors = !majors.isEmpty();
+        if (hasDepartment || hasMajors) {
+            hql.append(" AND");
+            if (hasDepartment) {
+                hql.append(" u.maTV.khoa LIKE :khoa");
+            }
+            if (hasMajors) {
+                if (hasDepartment) {
+                    hql.append(" AND");
+                }
+                hql.append(" u.maTV.nganh LIKE :nganh");
+            }
+
+        }
+        hql.append(" ORDER BY u.tGVao DESC");
+        Query<_UsageInformation> query = session.createQuery(hql.toString(), _UsageInformation.class);
+        
         query.setParameter("startTime", startTime);
         query.setParameter("endTime", endTime);
+        if (hasDepartment) {
+            query.setParameter("khoa", "%" + department + "%");
+        }
+
+        if (hasMajors) {
+            query.setParameter("nganh", "%" + majors + "%");
+        }
         return query.getResultList();
     }
 

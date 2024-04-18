@@ -56,6 +56,7 @@ GUI\GUI_Member$6.class
 GUI\GUI_Member$10.class
 GUI\GUI_SelectMemberToBorrowDevice$2.class
 GUI\GUI_UpdateMember$2.class
+GUI\GUI_StudyAreaHistory$6.class
 GUI\GUI_Member.class
 GUI\GUI_Processing.class
 DAO\DAO_Member.class
