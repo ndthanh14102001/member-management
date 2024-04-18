@@ -51,7 +51,19 @@ public class BUS_UsageInformation {
         return dao.borrowDevice(member, device);
     }
 
+    public Boolean returnDevice(_Device device) {
+        return dao.returnDevice(device);
+    }
+
     public List<_UsageInformation> getStudyAreaHistory(Date startTime, Date endTime) {
         return dao.getStudyAreaHistory(startTime, endTime);
+    }
+
+    public List<Object[]> getNotAvailableDevices() {
+        return dao.getNotAvailableDevices();
+    }
+
+    public List<Object[]> getAvailableDevices() {
+        return dao.getAvailableDevices();
     }
 }

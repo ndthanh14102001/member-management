@@ -4,6 +4,13 @@
  */
 package GUI;
 
+import Entity._Device;
+import Entity._Member;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -13,8 +20,60 @@ public class GUI_Device extends javax.swing.JFrame {
     /**
      * Creates new form GUI_Device
      */
+    private DefaultTableModel model;
+    private List<_Device> devices = new ArrayList<>();
+    private _Device selectedDevice;
+
     public GUI_Device() {
         initComponents();
+        model = new DefaultTableModel();
+        model.addColumn("Mã Thiết Bị");
+        model.addColumn("Tên Thiết Bị");
+        model.addColumn("Mô Tả");
+
+        tbDevices.setModel(model);
+        displayDataInTable();
+        tbDevices.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbDevicesMouseClicked(evt);
+            }
+        });
+    }
+
+    private void displayDataInTable() {
+        // Xóa dữ liệu cũ
+        model.setRowCount(0);
+        this.devices.clear();
+        // Lấy dữ liệu từ bảng 1 và thêm vào model1
+        List<_Device> deviceList = new BUS.BUS_Device().getAllDevices();
+
+        if (deviceList != null) {
+            for (_Device device : deviceList) {
+                this.devices.add(device);
+                model.addRow(new Object[]{
+                    device.getMaTB(),
+                    device.getTenTB(),
+                    device.getMoTaTB()
+                });
+            }
+        }
+    }
+
+    private void tbDevicesMouseClicked(java.awt.event.MouseEvent evt) {
+        // Lấy chỉ số của hàng được chọn
+        int row = tbDevices.getSelectedRow();
+
+        // Kiểm tra nếu hàng được chọn hợp lệ
+        if (row >= 0 && row < tbDevices.getRowCount()) {
+            this.selectedDevice = devices.get(row);
+            int maTB = (int) tbDevices.getValueAt(row, 0);
+            String tenTB = (String) tbDevices.getValueAt(row, 1);
+            String moTaTB = (String) tbDevices.getValueAt(row, 2);
+
+            txtMaTB.setText(String.valueOf(maTB));
+            txtTenTB.setText(tenTB);
+            txtMoTaTB.setText(moTaTB);
+        }
     }
 
     /**
@@ -35,15 +94,15 @@ public class GUI_Device extends javax.swing.JFrame {
         TextFieldYear = new javax.swing.JTextField();
         TextFieldType = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        DataTable = new javax.swing.JTable();
+        tbDevices = new javax.swing.JTable();
         LabelId2 = new javax.swing.JLabel();
         LabelNameDevice = new javax.swing.JLabel();
         LabelDescriptionDevice = new javax.swing.JLabel();
-        TextFieldDeviceId = new javax.swing.JTextField();
-        TextFieldDeviceName = new javax.swing.JTextField();
-        TextFieldDescriptionDevice = new javax.swing.JTextField();
-        ButtonDelete = new javax.swing.JButton();
-        ButtonAdd = new javax.swing.JButton();
+        txtMaTB = new javax.swing.JTextField();
+        txtTenTB = new javax.swing.JTextField();
+        txtMoTaTB = new javax.swing.JTextField();
+        btnDelete = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
         ButtonEdit = new javax.swing.JButton();
         ButtonAddExcel = new javax.swing.JButton();
 
@@ -96,7 +155,7 @@ public class GUI_Device extends javax.swing.JFrame {
             }
         });
 
-        DataTable.setModel(new javax.swing.table.DefaultTableModel(
+        tbDevices.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -107,7 +166,7 @@ public class GUI_Device extends javax.swing.JFrame {
                 "Mã thiết bị", "Tên thiết bị", "Mô tả thiết bị"
             }
         ));
-        jScrollPane1.setViewportView(DataTable);
+        jScrollPane1.setViewportView(tbDevices);
 
         LabelId2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         LabelId2.setText("Mã thiết bị");
@@ -118,37 +177,37 @@ public class GUI_Device extends javax.swing.JFrame {
         LabelDescriptionDevice.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         LabelDescriptionDevice.setText("Mô tả thiết bị");
 
-        TextFieldDeviceId.addActionListener(new java.awt.event.ActionListener() {
+        txtMaTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldDeviceIdActionPerformed(evt);
+                txtMaTBActionPerformed(evt);
             }
         });
 
-        TextFieldDeviceName.addActionListener(new java.awt.event.ActionListener() {
+        txtTenTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldDeviceNameActionPerformed(evt);
+                txtTenTBActionPerformed(evt);
             }
         });
 
-        TextFieldDescriptionDevice.addActionListener(new java.awt.event.ActionListener() {
+        txtMoTaTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldDescriptionDeviceActionPerformed(evt);
+                txtMoTaTBActionPerformed(evt);
             }
         });
 
-        ButtonDelete.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        ButtonDelete.setText("Xoá");
-        ButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnDelete.setText("Xoá");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonDeleteActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
-        ButtonAdd.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        ButtonAdd.setText("Thêm");
-        ButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonAddActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
@@ -192,26 +251,26 @@ public class GUI_Device extends javax.swing.JFrame {
                         .addComponent(TextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
-                        .addComponent(ButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(83, 83, 83)
                         .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(86, 86, 86)
-                        .addComponent(ButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(94, 94, 94)
                         .addComponent(ButtonAddExcel))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(LabelId2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(TextFieldDeviceId, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaTB, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(37, 37, 37)
                             .addComponent(LabelNameDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(TextFieldDeviceName, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTenTB, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(LabelDescriptionDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(TextFieldDescriptionDevice))))
+                            .addComponent(txtMoTaTB))))
                 .addContainerGap(61, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -239,17 +298,17 @@ public class GUI_Device extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelId2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelNameDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TextFieldDeviceId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TextFieldDeviceName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTenTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelDescriptionDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TextFieldDescriptionDevice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMoTaTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ButtonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonAddExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
@@ -269,28 +328,57 @@ public class GUI_Device extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFieldTypeActionPerformed
 
-    private void TextFieldDeviceIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldDeviceIdActionPerformed
+    private void txtMaTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaTBActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldDeviceIdActionPerformed
+    }//GEN-LAST:event_txtMaTBActionPerformed
 
-    private void TextFieldDeviceNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldDeviceNameActionPerformed
+    private void txtTenTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenTBActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldDeviceNameActionPerformed
+    }//GEN-LAST:event_txtTenTBActionPerformed
 
-    private void TextFieldDescriptionDeviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldDescriptionDeviceActionPerformed
+    private void txtMoTaTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMoTaTBActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldDescriptionDeviceActionPerformed
+    }//GEN-LAST:event_txtMoTaTBActionPerformed
 
-    private void ButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDeleteActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonDeleteActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tbDevices.getModel();
+        int[] selectedRows = tbDevices.getSelectedRows();
+        List<Integer> deviceIds = new ArrayList<>();
+        // Duyệt qua mỗi dòng đã chọn
+        for (int row : selectedRows) {
 
-    private void ButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddActionPerformed
+            int maTB = (int) model.getValueAt(row, 0);
+            deviceIds.add(maTB);
+        }
+        try {
+            new BUS.BUS_Device().DeleteDevices(deviceIds);
+            displayDataInTable();
+            JOptionPane.showMessageDialog(null, "Xóa các thành viên thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Xóa các thiết bị không thành công !", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+        displayDataInTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonAddActionPerformed
+        _Device device = new _Device();
+        device.setMaTB(Integer.valueOf(txtMaTB.getText()));
+        device.setTenTB(txtTenTB.getText());
+        device.setMoTaTB(txtMoTaTB.getText());
+        new BUS.BUS_Device().addDevice(device);
+        displayDataInTable();
+    }//GEN-LAST:event_btnAddActionPerformed
 
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
         // TODO add your handling code here:
+        _Device device = new _Device();
+        device.setMaTB(this.selectedDevice.getMaTB());
+        device.setTenTB(txtTenTB.getText());
+        device.setMoTaTB(txtMoTaTB.getText());
+        new BUS.BUS_Device().UpdateDevice(device);
+        displayDataInTable();
     }//GEN-LAST:event_ButtonEditActionPerformed
 
     private void ButtonAddExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddExcelActionPerformed
@@ -333,25 +421,25 @@ public class GUI_Device extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonAdd;
     private javax.swing.JButton ButtonAddExcel;
-    private javax.swing.JButton ButtonDelete;
     private javax.swing.JButton ButtonEdit;
-    private javax.swing.JTable DataTable;
     private javax.swing.JLabel LabelDescriptionDevice;
     private javax.swing.JLabel LabelId;
     private javax.swing.JLabel LabelId2;
     private javax.swing.JLabel LabelNameDevice;
     private javax.swing.JLabel LabelType;
     private javax.swing.JLabel LabelYear;
-    private javax.swing.JTextField TextFieldDescriptionDevice;
-    private javax.swing.JTextField TextFieldDeviceId;
-    private javax.swing.JTextField TextFieldDeviceName;
     private javax.swing.JTextField TextFieldId;
     private javax.swing.JTextField TextFieldType;
     private javax.swing.JTextField TextFieldYear;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel labelTitle;
+    private javax.swing.JTable tbDevices;
+    private javax.swing.JTextField txtMaTB;
+    private javax.swing.JTextField txtMoTaTB;
+    private javax.swing.JTextField txtTenTB;
     // End of variables declaration//GEN-END:variables
 }

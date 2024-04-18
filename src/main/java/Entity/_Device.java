@@ -32,7 +32,6 @@ public class _Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "MaTB")
     private Integer maTB;
@@ -42,6 +41,7 @@ public class _Device implements Serializable {
     @Lob
     @Column(name = "MoTaTB")
     private String moTaTB;
+    
     @OneToMany(mappedBy = "maTB")
     private Collection<_UsageInformation> usageInformationCollection;
 

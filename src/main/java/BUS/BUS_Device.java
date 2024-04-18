@@ -38,9 +38,9 @@ public class BUS_Device {
     }
     
     
-    public void UpdateDevice(int device_id, String description){
+    public void UpdateDevice( _Device device){
         dao_device = new DAO_Device();
-        dao_device.Update(device_id, description);
+        dao_device.Update(device);
     }
     
     public void DeleteDevice(int device_id){

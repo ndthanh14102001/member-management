@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 /**
@@ -168,6 +169,64 @@ public class DAO_UsageInformation {
         return new ArrayList<>();
     }
 
+    public List<Object[]> getAvailableDevices() {
+        List<Object[]> results = null;
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            String hql = """
+                         SELECT u.maTB.maTB,u.maTB.tenTB FROM _UsageInformation u
+                         WHERE u.maTB NOT IN (
+                             SELECT u.maTB FROM _UsageInformation u
+                             WHERE u.tGVao IS NULL AND u.tGMuon IS NOT NULL AND u.tGTra IS NULL
+                         )
+                         GROUP BY u.maTB
+                         UNION
+                         SELECT t.maTB, t.tenTB
+                         FROM _Device t
+                         WHERE t.maTB NOT IN (
+                             SELECT u.maTB.maTB FROM _UsageInformation u
+                         )""";
+
+            Query<Object[]> query = session.createQuery(hql);
+            results = query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return results;
+
+    }
+
+    public List<Object[]> getNotAvailableDevices() {
+        List<Object[]> results = null;
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            String hql = """
+                         SELECT u.maTB.maTB, u.maTB.tenTB, u.maTV.maTV, u.maTV.hoTen
+                         FROM _UsageInformation u
+                         WHERE u.tGVao IS NULL AND u.tGMuon IS NOT NULL AND u.tGTra IS NULL
+                         """;
+
+            Query<Object[]> query = session.createQuery(hql);
+            results = query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return results;
+
+    }
+
 //    public List getAllUsageInformationByTime(Date joinTime,Date leaveTime) {
 //        List<_UsageInformation> usageInformationList = null;
 //        try {
@@ -258,14 +317,37 @@ public class DAO_UsageInformation {
     }
 
     public Boolean borrowDevice(_Member member, _Device device) {
+        Date time = new Date();
+        _UsageInformation usageInformation = new _UsageInformation();
+        usageInformation.setMaTV(member);
+
+        usageInformation.setMaTB(device);
+        usageInformation.setTGVao(null);
+        usageInformation.setTGMuon(time);
+        usageInformation.setTGTra(null);
+
+        try {
+            session.beginTransaction();
+            session.save(usageInformation);
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return false;
+    }
+
+    public Boolean returnDevice(_Device device) {
         try {
             session.beginTransaction();
 
-            String hql = "UPDATE _UsageInformation SET maTB = :maTB, tGMuon = :TGMuon WHERE maTV = :maTV";
+            String hql = "UPDATE _UsageInformation SET tGTra = :TGTra WHERE maTB = :maTB and tGTra is NULL";
             Query query = session.createQuery(hql);
+            query.setParameter("TGTra", LocalDateTime.now());
             query.setParameter("maTB", device);
-            query.setParameter("TGMuon", LocalDateTime.now());
-            query.setParameter("maTV", member);
             int rowsUpdated = query.executeUpdate();
 
             if (rowsUpdated > 0) {
@@ -278,7 +360,6 @@ public class DAO_UsageInformation {
         }
         return false;
     }
-
 
     public List<_UsageInformation> getStudyAreaHistory(Date startTime, Date endTime) {
         String hql = "FROM _UsageInformation u "

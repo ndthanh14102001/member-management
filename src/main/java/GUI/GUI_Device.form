@@ -47,11 +47,11 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
-                      <Component id="ButtonAdd" min="-2" pref="111" max="-2" attributes="0"/>
+                      <Component id="btnAdd" min="-2" pref="111" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                       <Component id="ButtonEdit" min="-2" pref="111" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-                      <Component id="ButtonDelete" min="-2" pref="111" max="-2" attributes="0"/>
+                      <Component id="btnDelete" min="-2" pref="111" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                       <Component id="ButtonAddExcel" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -59,16 +59,16 @@
                       <Group type="102" attributes="0">
                           <Component id="LabelId2" min="-2" pref="110" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="TextFieldDeviceId" min="-2" pref="290" max="-2" attributes="0"/>
+                          <Component id="txtMaTB" min="-2" pref="290" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                           <Component id="LabelNameDevice" min="-2" pref="110" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="TextFieldDeviceName" min="-2" pref="349" max="-2" attributes="0"/>
+                          <Component id="txtTenTB" min="-2" pref="349" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="LabelDescriptionDevice" min="-2" pref="110" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="TextFieldDescriptionDevice" max="32767" attributes="0"/>
+                          <Component id="txtMoTaTB" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -104,19 +104,19 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="LabelId2" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                   <Component id="LabelNameDevice" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="TextFieldDeviceId" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TextFieldDeviceName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtMaTB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtTenTB" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="LabelDescriptionDevice" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="TextFieldDescriptionDevice" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtMoTaTB" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="ButtonAdd" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnAdd" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="ButtonEdit" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                  <Component id="ButtonDelete" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnDelete" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="ButtonAddExcel" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="53" max="32767" attributes="0"/>
@@ -209,7 +209,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="DataTable">
+        <Component class="javax.swing.JTable" name="tbDevices">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="3" rowCount="4">
@@ -246,22 +246,22 @@
         <Property name="text" type="java.lang.String" value="M&#xf4; t&#x1ea3; thi&#x1ebf;t b&#x1ecb;"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="TextFieldDeviceId">
+    <Component class="javax.swing.JTextField" name="txtMaTB">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldDeviceIdActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMaTBActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="TextFieldDeviceName">
+    <Component class="javax.swing.JTextField" name="txtTenTB">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldDeviceNameActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTenTBActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="TextFieldDescriptionDevice">
+    <Component class="javax.swing.JTextField" name="txtMoTaTB">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldDescriptionDeviceActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMoTaTBActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="ButtonDelete">
+    <Component class="javax.swing.JButton" name="btnDelete">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Times New Roman" size="18" style="1"/>
@@ -269,10 +269,10 @@
         <Property name="text" type="java.lang.String" value="Xo&#xe1;"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonDeleteActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="ButtonAdd">
+    <Component class="javax.swing.JButton" name="btnAdd">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Times New Roman" size="18" style="1"/>
@@ -280,7 +280,7 @@
         <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonAddActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ButtonEdit">
