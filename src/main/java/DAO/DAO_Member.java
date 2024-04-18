@@ -84,6 +84,8 @@ public class DAO_Member {
             return results;
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            session.clear();
         }
         return new ArrayList<>();
     }
@@ -106,6 +108,8 @@ public class DAO_Member {
                 transaction.rollback();
             }
             e.printStackTrace();
+        } finally {
+            session.clear();
         }
     }
 
@@ -137,6 +141,8 @@ public class DAO_Member {
                 transaction.rollback();
             }
             throw e;
+        } finally {
+            session.clear();
         }
     }
 
@@ -155,6 +161,8 @@ public class DAO_Member {
             }
             e.printStackTrace();
             throw e;
+        } finally {
+            session.clear();
         }
     }
 
@@ -175,6 +183,8 @@ public class DAO_Member {
             }
             e.printStackTrace();
             return false;
+        } finally {
+            session.clear();
         }
     }
 
@@ -214,6 +224,8 @@ public class DAO_Member {
             }
             e.printStackTrace();
             throw new SQLException(e.getMessage());
+        } finally {
+            session.clear();
         }
     }
 
@@ -238,6 +250,8 @@ public class DAO_Member {
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Lỗi khi kiểm tra dữ liệu liên kết.");
+        } finally {
+            session.clear();
         }
     }
 }

@@ -5,9 +5,9 @@ GUI\GUI_UpdateMember$3.class
 GUI\GUI_Device$12.class
 GUI\GUI_Device$2.class
 Helper\DateHelper.class
-DAO\DAO_Example.class
 GUI\GUI_AddMember$1.class
 GUI\GUI_Processing$1.class
+GUI\GUI_Device$15.class
 GUI\GUI_Processing$4.class
 GUI\GUI_JoinStudyArea$4.class
 GUI\GUI_Device$5.class
@@ -35,6 +35,7 @@ GUI\GUI_UpdateMember.class
 DAO\ConnectDB.class
 GUI\GUI_BorrowAndReturnDevice$1.class
 GUI\GUI_AddMember.class
+GUI\GUI_Device$14.class
 GUI\GUI_Device$9.class
 GUI\GUI_Member$5.class
 GUI\GUI_Device$7.class
@@ -49,6 +50,7 @@ GUI\GUI_SelectMemberToBorrowDevice.class
 GUI\GUI_StudyAreaHistory$3.class
 GUI\GUI_Device$3.class
 Entity\_Member.class
+GUI\GUI_Device$13.class
 GUI\GUI_JoinStudyArea$1.class
 DAO\DAO_UsageInformation.class
 GUI\GUI_Member$6.class

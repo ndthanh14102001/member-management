@@ -26,7 +26,7 @@ public class GUI_Member extends javax.swing.JFrame {
      * Creates new form MemberGUI1
      */
     private DefaultTableModel model;
-    private BUS_Member bus_member = new BUS_Member();
+
     private List<_Member> members = new ArrayList<>();
     private _Member selectedMember;
 
@@ -431,7 +431,7 @@ public class GUI_Member extends javax.swing.JFrame {
             memberIds.add(maTV);
         }
         try {
-            bus_member.deleteMembers(memberIds);
+            new BUS_Member().deleteMembers(memberIds);
             displayDataInTable();
             JOptionPane.showMessageDialog(null, "Xóa các thành viên thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         } catch (HeadlessException | SQLException e) {

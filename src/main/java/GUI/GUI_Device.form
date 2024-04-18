@@ -32,18 +32,18 @@
                           <Group type="102" attributes="0">
                               <Component id="LabelYear" min="-2" pref="110" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="TextFieldYear" max="32767" attributes="0"/>
+                              <Component id="txtFilterYear" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="LabelId" min="-2" pref="110" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="TextFieldId" min="-2" pref="186" max="-2" attributes="0"/>
+                              <Component id="txtFilterMaTB" min="-2" pref="186" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                       <Component id="LabelType" min="-2" pref="110" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="TextFieldType" min="-2" pref="192" max="-2" attributes="0"/>
+                      <Component id="txtFilterType" min="-2" pref="192" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
@@ -90,15 +90,15 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="LabelId" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
                   <Component id="LabelType" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="TextFieldId" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TextFieldType" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtFilterMaTB" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtFilterType" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="LabelYear" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="TextFieldYear" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtFilterYear" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="275" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -119,7 +119,7 @@
                   <Component id="btnDelete" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="ButtonAddExcel" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="53" max="32767" attributes="0"/>
+              <EmptySpace pref="65" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -187,19 +187,19 @@
         <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="TextFieldId">
+    <Component class="javax.swing.JTextField" name="txtFilterMaTB">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldIdActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFilterMaTBActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="TextFieldYear">
+    <Component class="javax.swing.JTextField" name="txtFilterYear">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldYearActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFilterYearActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="TextFieldType">
+    <Component class="javax.swing.JTextField" name="txtFilterType">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextFieldTypeActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFilterTypeActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">

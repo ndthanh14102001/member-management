@@ -34,34 +34,34 @@ public class _Device implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "MaTB")
-    private Integer maTB;
+    private String maTB;
     @Basic(optional = false)
     @Column(name = "TenTB")
     private String tenTB;
     @Lob
     @Column(name = "MoTaTB")
     private String moTaTB;
-    
+
     @OneToMany(mappedBy = "maTB")
     private Collection<_UsageInformation> usageInformationCollection;
 
     public _Device() {
     }
 
-    public _Device(Integer maTB) {
+    public _Device(String maTB) {
         this.maTB = maTB;
     }
 
-    public _Device(Integer maTB, String tenTB) {
+    public _Device(String maTB, String tenTB) {
         this.maTB = maTB;
         this.tenTB = tenTB;
     }
 
-    public Integer getMaTB() {
+    public String getMaTB() {
         return maTB;
     }
 
-    public void setMaTB(Integer maTB) {
+    public void setMaTB(String maTB) {
         this.maTB = maTB;
     }
 
@@ -80,13 +80,11 @@ public class _Device implements Serializable {
     public void setMoTaTB(String moTaTB) {
         this.moTaTB = moTaTB;
     }
-    
-    
-    public boolean Validate(){
-        if (maTB == null || String.valueOf(maTB).length() != 6) 
-            return false;
-        else
-            return true;
+
+    public void Validate() throws Exception {
+        if (String.valueOf(maTB).length() != 11) {
+            throw new Exception("Mã thiết bị phải có 11 ký tự");
+        }
     }
 
     public Collection<_UsageInformation> getUsageInformationCollection() {
@@ -121,5 +119,5 @@ public class _Device implements Serializable {
     public String toString() {
         return "Entity._Device[ maTB=" + maTB + " ]";
     }
-    
+
 }

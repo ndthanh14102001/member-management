@@ -8,7 +8,11 @@ import Entity._Device;
 import Entity._Member;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -38,6 +42,7 @@ public class GUI_Device extends javax.swing.JFrame {
                 tbDevicesMouseClicked(evt);
             }
         });
+        addOnChangeFilterEvent();
     }
 
     private void displayDataInTable() {
@@ -45,7 +50,7 @@ public class GUI_Device extends javax.swing.JFrame {
         model.setRowCount(0);
         this.devices.clear();
         // Lấy dữ liệu từ bảng 1 và thêm vào model1
-        List<_Device> deviceList = new BUS.BUS_Device().getAllDevices();
+        List<_Device> deviceList = new BUS.BUS_Device().getAllDevices(txtFilterType.getText(), txtFilterYear.getText(), txtFilterMaTB.getText());
 
         if (deviceList != null) {
             for (_Device device : deviceList) {
@@ -66,7 +71,7 @@ public class GUI_Device extends javax.swing.JFrame {
         // Kiểm tra nếu hàng được chọn hợp lệ
         if (row >= 0 && row < tbDevices.getRowCount()) {
             this.selectedDevice = devices.get(row);
-            int maTB = (int) tbDevices.getValueAt(row, 0);
+            String maTB = (String) tbDevices.getValueAt(row, 0);
             String tenTB = (String) tbDevices.getValueAt(row, 1);
             String moTaTB = (String) tbDevices.getValueAt(row, 2);
 
@@ -74,6 +79,69 @@ public class GUI_Device extends javax.swing.JFrame {
             txtTenTB.setText(tenTB);
             txtMoTaTB.setText(moTaTB);
         }
+    }
+
+    private void addOnChangeFilterEvent() {
+        txtFilterMaTB.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có chèn văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có xóa văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có thay đổi thuộc tính văn bản khác)
+                displayDataInTable();
+            }
+
+        });
+        txtFilterYear.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có chèn văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có xóa văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có thay đổi thuộc tính văn bản khác)
+                displayDataInTable();
+            }
+
+        });
+        txtFilterType.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có chèn văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có xóa văn bản)
+                displayDataInTable();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Xử lý khi có sự thay đổi trong văn bản (khi có thay đổi thuộc tính văn bản khác)
+                displayDataInTable();
+            }
+
+        });
     }
 
     /**
@@ -90,9 +158,9 @@ public class GUI_Device extends javax.swing.JFrame {
         LabelId = new javax.swing.JLabel();
         LabelYear = new javax.swing.JLabel();
         LabelType = new javax.swing.JLabel();
-        TextFieldId = new javax.swing.JTextField();
-        TextFieldYear = new javax.swing.JTextField();
-        TextFieldType = new javax.swing.JTextField();
+        txtFilterMaTB = new javax.swing.JTextField();
+        txtFilterYear = new javax.swing.JTextField();
+        txtFilterType = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbDevices = new javax.swing.JTable();
         LabelId2 = new javax.swing.JLabel();
@@ -137,21 +205,21 @@ public class GUI_Device extends javax.swing.JFrame {
         LabelType.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         LabelType.setText("Loại");
 
-        TextFieldId.addActionListener(new java.awt.event.ActionListener() {
+        txtFilterMaTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldIdActionPerformed(evt);
+                txtFilterMaTBActionPerformed(evt);
             }
         });
 
-        TextFieldYear.addActionListener(new java.awt.event.ActionListener() {
+        txtFilterYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldYearActionPerformed(evt);
+                txtFilterYearActionPerformed(evt);
             }
         });
 
-        TextFieldType.addActionListener(new java.awt.event.ActionListener() {
+        txtFilterType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextFieldTypeActionPerformed(evt);
+                txtFilterTypeActionPerformed(evt);
             }
         });
 
@@ -240,15 +308,15 @@ public class GUI_Device extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LabelYear, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TextFieldYear))
+                                .addComponent(txtFilterYear))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtFilterMaTB, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(148, 148, 148)
                         .addComponent(LabelType, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,13 +354,13 @@ public class GUI_Device extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelId, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelType, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TextFieldType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFilterMaTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelYear, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TextFieldYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                    .addComponent(txtFilterYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -310,23 +378,23 @@ public class GUI_Device extends javax.swing.JFrame {
                     .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButtonAddExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TextFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldIdActionPerformed
+    private void txtFilterMaTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterMaTBActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldIdActionPerformed
+    }//GEN-LAST:event_txtFilterMaTBActionPerformed
 
-    private void TextFieldYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldYearActionPerformed
+    private void txtFilterYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterYearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldYearActionPerformed
+    }//GEN-LAST:event_txtFilterYearActionPerformed
 
-    private void TextFieldTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextFieldTypeActionPerformed
+    private void txtFilterTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterTypeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextFieldTypeActionPerformed
+    }//GEN-LAST:event_txtFilterTypeActionPerformed
 
     private void txtMaTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaTBActionPerformed
         // TODO add your handling code here:
@@ -344,19 +412,19 @@ public class GUI_Device extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) tbDevices.getModel();
         int[] selectedRows = tbDevices.getSelectedRows();
-        List<Integer> deviceIds = new ArrayList<>();
+        List<String> deviceIds = new ArrayList<>();
         // Duyệt qua mỗi dòng đã chọn
         for (int row : selectedRows) {
 
-            int maTB = (int) model.getValueAt(row, 0);
+            String maTB = (String) model.getValueAt(row, 0);
             deviceIds.add(maTB);
         }
         try {
             new BUS.BUS_Device().DeleteDevices(deviceIds);
             displayDataInTable();
-            JOptionPane.showMessageDialog(null, "Xóa các thành viên thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Xóa các thiết bị thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Xóa các thiết bị không thành công !", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
         displayDataInTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
@@ -364,10 +432,14 @@ public class GUI_Device extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
         _Device device = new _Device();
-        device.setMaTB(Integer.valueOf(txtMaTB.getText()));
+        device.setMaTB(txtMaTB.getText());
         device.setTenTB(txtTenTB.getText());
         device.setMoTaTB(txtMoTaTB.getText());
-        new BUS.BUS_Device().addDevice(device);
+        try {
+            new BUS.BUS_Device().addDevice(device);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
         displayDataInTable();
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -429,15 +501,15 @@ public class GUI_Device extends javax.swing.JFrame {
     private javax.swing.JLabel LabelNameDevice;
     private javax.swing.JLabel LabelType;
     private javax.swing.JLabel LabelYear;
-    private javax.swing.JTextField TextFieldId;
-    private javax.swing.JTextField TextFieldType;
-    private javax.swing.JTextField TextFieldYear;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel labelTitle;
     private javax.swing.JTable tbDevices;
+    private javax.swing.JTextField txtFilterMaTB;
+    private javax.swing.JTextField txtFilterType;
+    private javax.swing.JTextField txtFilterYear;
     private javax.swing.JTextField txtMaTB;
     private javax.swing.JTextField txtMoTaTB;
     private javax.swing.JTextField txtTenTB;

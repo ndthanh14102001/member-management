@@ -73,7 +73,7 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
         // Kiểm tra nếu hàng được chọn hợp lệ
         if (row >= 0 && row < tbDevices.getRowCount()) {
             // Lấy dữ liệu từ bảng và hiển thị vào các thành phần trên giao diện
-            Integer maTB = (Integer) tbDevices.getValueAt(row, 0);
+            String maTB = (String) tbDevices.getValueAt(row, 0);
             return new _Device(maTB);
         }
         return null;
