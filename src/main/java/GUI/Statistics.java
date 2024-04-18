@@ -267,6 +267,7 @@ public class Statistics extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Statistics().setVisible(true);
+                
             }
         });
     }

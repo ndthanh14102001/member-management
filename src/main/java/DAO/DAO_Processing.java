@@ -17,14 +17,15 @@ import org.hibernate.query.Query;
  * @author HP
  */
 public class DAO_Processing {
+
     private SessionFactory factory;
     private Session session;
-    
+
     public DAO_Processing() {
         factory = new ConnectDB().getFactory();
         session = factory.openSession();
     }
-    
+
     public List getAllProcessing() {
         try {
             List<Object> results = session.createQuery("FROM _Processing p JOIN p.maTV").getResultList();
@@ -36,7 +37,7 @@ public class DAO_Processing {
         }
         return null;
     }
-    
+
     public boolean createProcess(_Processing processing) {
         try {
             session.save(processing);
@@ -48,7 +49,7 @@ public class DAO_Processing {
         }
         return false;
     }
-    
+
     public boolean updateProcess(_Processing processing) {
         try {
             session.beginTransaction();
