@@ -19,6 +19,7 @@ import org.hibernate.query.Query;
 public class DAO_Processing {
     private SessionFactory factory;
     private Session session;
+    private List<_Processing> results;
     
     public DAO_Processing() {
         factory = new ConnectDB().getFactory();
@@ -35,6 +36,18 @@ public class DAO_Processing {
             session.close();
         }
         return null;
+    }
+    
+    public List<_Processing> getAllProcessings() {   //Test
+        try {
+            results = session.createQuery("FROM _Processing p JOIN p.maTV").getResultList();
+            //return results;
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            session.close();
+        }
+        return results;
     }
     
     public boolean createProcess(_Processing processing) {

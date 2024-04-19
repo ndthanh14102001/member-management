@@ -37,6 +37,15 @@ public class BUS_Device {
             return false;
     }
     
+    public List<_Device> getBorrowedDevices(String current_time, String time, String device_name){
+        dao_device = new DAO_Device();
+        return dao_device.getBorrowedDevices(current_time, time, device_name);
+    }
+    
+    public List<_Device> getBorrowingDevices(String current_time, String time){
+        dao_device = new DAO_Device();
+        return dao_device.getBorrowingDevices(current_time, time);
+    }
     
     public void UpdateDevice(int device_id, String description){
         dao_device = new DAO_Device();

@@ -112,6 +112,36 @@ public class DAO_Device {
         return results;
     }
     
+    public List<_Device> getBorrowedDevices(String current_time, String time, String device_name){
+        try {
+            Query query =  session.createQuery("FROM _Device, _UsageInformation WHERE _Device.maTB AND _UsageInformation.maTB AND _UsageInformation.tGTRA <= :current AND _Device.tenTB=: tenTB OR _UsageInformation.tGMUON=: tgmuon");           
+            query.setParameter("current", current_time);
+            query.setParameter("tenTB", device_name);
+            query.setParameter("tgmuon", time);
+            results = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+    
+    public List<_Device> getBorrowingDevices(String current_time, String time){
+        try {
+            Query query =  session.createQuery("FROM _Device, _UsageInformation WHERE _Device.maTB AND _UsageInformation.maTB AND :current BETWEEN _UsageInformation.tGMUON AND _UsageInformation.tGTRA  AND _UsageInformation.tGMUON =: tgmuon");           
+            query.setParameter("current", current_time);
+            query.setParameter("tgmuon", time);
+            results = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+    
+    
     public List<_Device> getAllDevices(String id, String type, String year){
         try {
             Query query = session.createQuery("FROM _Device WHERE maTB LIKE :id AND maTB LIKE :type AND maTB LIKE :year");

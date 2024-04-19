@@ -23,6 +23,10 @@ public class BUS_Processing {
     public List getAllProcessing() {
         return dao.getAllProcessing();
     }
+    
+    public List<_Processing> getAllProcessings(){
+        return dao.getAllProcessings();
+    }
 
     public boolean createProcess(_Processing processing) {
         return dao.createProcess(processing);

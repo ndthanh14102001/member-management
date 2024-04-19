@@ -16,4 +16,5 @@ DAO\ConnectDB.class
 GUI\GUI_Member$1.class
 BUS\BUS_Member.class
 BUS\BUS_Device.class
+GUI\Statistics$2.class
 GUI\Statistics.class

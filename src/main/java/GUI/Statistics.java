@@ -3,18 +3,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
+import BUS.BUS_Device;
+import BUS.BUS_Member;
+import BUS.BUS_Processing;
+import java.awt.Component;
+import java.awt.Container;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Duc Anh
  */
 public class Statistics extends javax.swing.JFrame {
 
+    private BUS_Device bd;
+    private BUS_Member bm;
+    private BUS_Processing bp;
     /**
      * Creates new form Statistics
      */
     public Statistics() {
         initComponents();
+        bd = new BUS_Device();
+        bm = new BUS_Member();
+        bp = new BUS_Processing();
+        Render();
+        ShowTable1();
     }
 
     /**
@@ -76,7 +91,13 @@ public class Statistics extends javax.swing.JFrame {
         );
 
         comboBoxStatistics.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        comboBoxStatistics.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxStatistics.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thiết bị ", "Thành viên ", "Xử lý vi phạm" }));
+        comboBoxStatistics.setAlignmentY(1.5F);
+        comboBoxStatistics.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboBoxStatisticsItemStateChanged(evt);
+            }
+        });
 
         labelStatisticsFor.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
         labelStatisticsFor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -87,14 +108,12 @@ public class Statistics extends javax.swing.JFrame {
         labelDepartment.setText("Khoa");
 
         comboBoxDepartment.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        comboBoxDepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelBranch.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
         labelBranch.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelBranch.setText("Ngành");
 
         comboBoxBranch.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        comboBoxBranch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         labelJoinDate.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
         labelJoinDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -113,20 +132,21 @@ public class Statistics extends javax.swing.JFrame {
         labelStatus.setText("Tình trạng xử lý");
 
         comboBoxStatus.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        comboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vi phạm", "Chưa vi phạm" }));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         jScrollPane2.setViewportView(jTable1);
+        jTable1.getAccessibleContext().setAccessibleParent(jPanel1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -137,45 +157,43 @@ public class Statistics extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
+                                .addComponent(labelDepartment)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboBoxDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(labelBorrowDate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(borrowDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(labelStatisticsFor, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboBoxStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(labelDepartment)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(comboBoxDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(labelBorrowDate)
+                                        .addComponent(labelBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(borrowDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(comboBoxBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(60, 60, 60)
-                                        .addComponent(labelStatisticsFor, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelPayDate)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(comboBoxStatistics, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(38, 38, 38)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(labelBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(comboBoxBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(labelPayDate)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(payDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                        .addGap(39, 39, 39)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(labelStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(labelJoinDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(comboBoxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(joinDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))))
-                            .addComponent(jScrollPane2))
-                        .addGap(0, 8, Short.MAX_VALUE)))
+                                        .addComponent(payDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(39, 39, 39)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(labelStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(labelJoinDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(comboBoxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(joinDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))))
+                        .addGap(0, 8, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -212,7 +230,7 @@ public class Statistics extends javax.swing.JFrame {
                                         .addComponent(labelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelPayDate, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)))
@@ -236,6 +254,76 @@ public class Statistics extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void comboBoxStatisticsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxStatisticsItemStateChanged
+        if(comboBoxStatistics.getSelectedIndex()==0){
+            ShowTable1();
+        }
+        if(comboBoxStatistics.getSelectedIndex()==1){
+            //ShowOccupingDevice();
+            ShowTable2();
+            
+        }
+        if(comboBoxStatistics.getSelectedIndex()==2){
+            ShowTable3();
+        }
+    }//GEN-LAST:event_comboBoxStatisticsItemStateChanged
+
+    public void Render(){
+        for(int i=0; i< bm.getAllMembers().size();i++){
+            comboBoxDepartment.addItem(bm.getAllMembers().get(i).getKhoa());
+            comboBoxBranch.addItem(bm.getAllMembers().get(i).getNganh());
+        }
+    
+    }
+    
+    public void ShowTable1(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("MATB");
+        model.addColumn("Tên thiết bị");
+        model.addColumn("Mô tả");
+        for(int i=0; i< bd.getAllDevices().size();i++){
+            Object[] dataRow = {bd.getAllDevices().get(i).getMaTB(), bd.getAllDevices().get(i).getTenTB(), bd.getAllDevices().get(i).getMoTaTB()};
+            model.addRow(dataRow);
+        }
+        jTable1.setModel(model); 
+    }
+    
+    public void ShowTable2(){ 
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("MATV");
+        model.addColumn("Tên thành viên");
+        model.addColumn("Khoa");
+        model.addColumn("Ngành");
+        model.addColumn("SDT");
+        for(int i=0; i< bm.getAllMembers().size();i++){
+            Object[] dataRow = {bm.getAllMembers().get(i).getMaTV(), bm.getAllMembers().get(i).getHoTen(), bm.getAllMembers().get(i).getKhoa(), bm.getAllMembers().get(i).getNganh(), bm.getAllMembers().get(i).getSdt()};
+            model.addRow(dataRow);
+        }
+        jTable1.setModel(model);  
+    }
+    
+    public void ShowTable3(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("MAXL");
+        model.addColumn("MATV");
+        model.addColumn("Hình thức");
+        model.addColumn("Số tiền");
+        model.addColumn("Ngày xử lý");
+        model.addColumn("Trạng thái");
+        for(int i=0; i< bp.getAllProcessings().size();i++){
+            Object[] dataRow = {
+                bp.getAllProcessings().get(i).getMaXL(), 
+                bp.getAllProcessings().get(i).getMaTV().getMaTV(), 
+                bp.getAllProcessings().get(i).getHinhThucXL(),
+                bp.getAllProcessings().get(i).getSoTien(),
+                bp.getAllProcessings().get(i).getNgayXL(),
+                bp.getAllProcessings().get(i).getTrangThaiXL()         
+            };
+            model.addRow(dataRow);
+        }
+        jTable1.setModel(model);  
+    }
+    
     /**
      * @param args the command line arguments
      */

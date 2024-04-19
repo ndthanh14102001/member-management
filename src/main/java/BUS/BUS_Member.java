@@ -23,6 +23,10 @@ public class BUS_Member {
     public List<Object[]> getAllMembers(String memberId, String department, String majors) {
         return memberDAO.getAllMembers(memberId, department, majors);
     }
+    
+    public List<_Member> getAllMembers() {
+        return memberDAO.getAllMembers();
+    }
 //Example
 //        List<Object[]> results = new BUS_Member().getAllMembers("00017CNTTSPTH", "", "SPTH");
 //        for (Object[] result : results) {

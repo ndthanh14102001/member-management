@@ -22,6 +22,7 @@ public class DAO_Member {
 
     private SessionFactory factory;
     Session session;
+    private List<_Member> results;
 
     public DAO_Member() {
         factory = new ConnectDB().getFactory();
@@ -78,6 +79,17 @@ public class DAO_Member {
         return new ArrayList<>();
     }
 
+    public List<_Member> getAllMembers(){
+        try {
+            results = session.createQuery("FROM _Member").getResultList();           
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
+    }
+    
     public void addMember(_Member member) throws Exception {
         member.checkMaTVFormat();
         member.setKhoa(member.getKhoaById());
