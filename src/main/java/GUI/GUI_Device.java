@@ -235,7 +235,7 @@ public class GUI_Device extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
-        labelTitle.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
+        labelTitle.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         labelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitle.setText("THIẾT BỊ");
 
@@ -253,33 +253,37 @@ public class GUI_Device extends javax.swing.JFrame {
             .addComponent(labelTitle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        LabelId.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LabelId.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         LabelId.setText("Mã thiết bị");
 
-        LabelYear.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LabelYear.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         LabelYear.setText("Năm");
 
-        LabelType.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LabelType.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         LabelType.setText("Loại");
 
+        txtFilterMaTB.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtFilterMaTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFilterMaTBActionPerformed(evt);
             }
         });
 
+        txtFilterYear.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtFilterYear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFilterYearActionPerformed(evt);
             }
         });
 
+        txtFilterType.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtFilterType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFilterTypeActionPerformed(evt);
             }
         });
 
+        tbDevices.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tbDevices.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -293,34 +297,38 @@ public class GUI_Device extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbDevices);
 
-        LabelId2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LabelId2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         LabelId2.setText("Mã thiết bị");
 
-        LabelNameDevice.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LabelNameDevice.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         LabelNameDevice.setText("Tên thiết bị");
 
-        LabelDescriptionDevice.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LabelDescriptionDevice.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         LabelDescriptionDevice.setText("Mô tả thiết bị");
 
+        txtMaTB.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtMaTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMaTBActionPerformed(evt);
             }
         });
 
+        txtTenTB.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtTenTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTenTBActionPerformed(evt);
             }
         });
 
+        txtMoTaTB.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtMoTaTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMoTaTBActionPerformed(evt);
             }
         });
 
-        btnDelete.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnDelete.setBackground(new java.awt.Color(204, 204, 204));
+        btnDelete.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnDelete.setText("Xoá");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -328,7 +336,8 @@ public class GUI_Device extends javax.swing.JFrame {
             }
         });
 
-        btnAdd.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnAdd.setBackground(new java.awt.Color(204, 204, 204));
+        btnAdd.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnAdd.setText("Thêm");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,7 +345,8 @@ public class GUI_Device extends javax.swing.JFrame {
             }
         });
 
-        ButtonEdit.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        ButtonEdit.setBackground(new java.awt.Color(204, 204, 204));
+        ButtonEdit.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         ButtonEdit.setText("Cập nhật");
         ButtonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -344,7 +354,8 @@ public class GUI_Device extends javax.swing.JFrame {
             }
         });
 
-        ButtonAddExcel.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        ButtonAddExcel.setBackground(new java.awt.Color(204, 204, 204));
+        ButtonAddExcel.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         ButtonAddExcel.setText("Nhập bằng file Excel");
         ButtonAddExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -374,15 +385,6 @@ public class GUI_Device extends javax.swing.JFrame {
                         .addComponent(LabelType, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(83, 83, 83)
-                        .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(86, 86, 86)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(94, 94, 94)
-                        .addComponent(ButtonAddExcel))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(LabelId2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -401,6 +403,16 @@ public class GUI_Device extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAdd)
+                .addGap(83, 83, 83)
+                .addComponent(ButtonEdit)
+                .addGap(86, 86, 86)
+                .addComponent(btnDelete)
+                .addGap(94, 94, 94)
+                .addComponent(ButtonAddExcel)
+                .addGap(217, 217, 217))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,10 +443,10 @@ public class GUI_Device extends javax.swing.JFrame {
                     .addComponent(txtMoTaTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ButtonAddExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdd)
+                    .addComponent(ButtonEdit)
+                    .addComponent(btnDelete)
+                    .addComponent(ButtonAddExcel))
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 

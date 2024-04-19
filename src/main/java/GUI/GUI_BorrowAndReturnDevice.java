@@ -99,10 +99,11 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 0, 22)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ MƯỢN VÀ TRẢ THIẾT BỊ");
 
+        tbDevices.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tbDevices.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -116,6 +117,7 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbDevices);
 
+        cbSelectDeviceState.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbSelectDeviceState.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thiết bị trống", "Thiết bị đã được mượn" }));
         cbSelectDeviceState.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,6 +125,8 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
             }
         });
 
+        btnReturn.setBackground(new java.awt.Color(204, 204, 204));
+        btnReturn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnReturn.setText("Trả thiết bị");
         btnReturn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,6 +134,8 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
             }
         });
 
+        btnBorrow.setBackground(new java.awt.Color(204, 204, 204));
+        btnBorrow.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnBorrow.setText("Mượn thiết bị");
         btnBorrow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,8 +143,12 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(204, 204, 204));
+        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton3.setText("Lịch sử mượn");
 
+        btnRefresh.setBackground(new java.awt.Color(204, 204, 204));
+        btnRefresh.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnRefresh.setText("Refresh");
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

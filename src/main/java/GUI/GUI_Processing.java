@@ -122,7 +122,6 @@ public class GUI_Processing extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         labelStatisticsFor1 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        labelStatisticsFor3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         labelStatisticsFor5 = new javax.swing.JLabel();
         labelStatisticsFor6 = new javax.swing.JLabel();
@@ -148,7 +147,7 @@ public class GUI_Processing extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         labelTitle.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         labelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -172,14 +171,15 @@ public class GUI_Processing extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setPreferredSize(new java.awt.Dimension(900, 54));
 
         labelStatisticsFor.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
+        labelStatisticsFor.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         labelStatisticsFor.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor.setText("Trạng thái xử lý");
 
+        jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chọn", "chưa xử lý", "Đã xử lý" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(364, 42));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
@@ -189,11 +189,12 @@ public class GUI_Processing extends javax.swing.JFrame {
         });
 
         labelStatisticsFor1.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor1.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
+        labelStatisticsFor1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         labelStatisticsFor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelStatisticsFor1.setText("Hình thức xử lý");
         labelStatisticsFor1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
+        jComboBox2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "chọn", "khóa thẻ 1 tháng", "Khóa thẻ 2 tháng", "Khóa thẻ vĩnh viễn", "Bồi thường mất tài sản", "Khóa thẻ 1 tháng và bồi thường" }));
         jComboBox2.setPreferredSize(new java.awt.Dimension(364, 20));
         jComboBox2.addItemListener(new java.awt.event.ItemListener() {
@@ -202,71 +203,58 @@ public class GUI_Processing extends javax.swing.JFrame {
             }
         });
 
-        labelStatisticsFor3.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor3.setFont(new java.awt.Font("Times New Roman", 1, 22)); // NOI18N
-        labelStatisticsFor3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelStatisticsFor3.setText("-");
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(110, Short.MAX_VALUE)
-                .addComponent(labelStatisticsFor, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelStatisticsFor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(labelStatisticsFor1))
-                    .addComponent(labelStatisticsFor3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(47, 47, 47)
+                .addComponent(labelStatisticsFor1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addContainerGap(432, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelStatisticsFor, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelStatisticsFor1)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(labelStatisticsFor3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelStatisticsFor, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelStatisticsFor1)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setPreferredSize(new java.awt.Dimension(900, 200));
 
         labelStatisticsFor5.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        labelStatisticsFor5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         labelStatisticsFor5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor5.setText("Tổng tiền : ");
 
         labelStatisticsFor6.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        labelStatisticsFor6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         labelStatisticsFor6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor6.setText("Mã thành viên");
 
         labelStatisticsFor7.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor7.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        labelStatisticsFor7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         labelStatisticsFor7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor7.setText("Hình thức xử lý");
 
         labelStatisticsFor8.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        labelStatisticsFor8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         labelStatisticsFor8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor8.setText("Ngày xử lý");
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setText("Thêm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -274,6 +262,7 @@ public class GUI_Processing extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(204, 204, 204));
         jButton2.setText("Cập Nhật");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,6 +270,7 @@ public class GUI_Processing extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setText("Xóa");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,11 +303,11 @@ public class GUI_Processing extends javax.swing.JFrame {
         );
 
         labelStatisticsFor9.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor9.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        labelStatisticsFor9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         labelStatisticsFor9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor9.setText("Số tiền");
 
-        enabledtext.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
+        enabledtext.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         enabledtext.setForeground(new java.awt.Color(255, 255, 255));
         enabledtext.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         enabledtext.setToolTipText("");
@@ -328,19 +318,22 @@ public class GUI_Processing extends javax.swing.JFrame {
         enabledtext.setSelectionColor(new java.awt.Color(255, 255, 255));
 
         labelStatisticsFor10.setBackground(new java.awt.Color(255, 255, 255));
-        labelStatisticsFor10.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        labelStatisticsFor10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         labelStatisticsFor10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         labelStatisticsFor10.setText("Trạng thái xử lý");
 
+        jComboBox5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1" }));
         jComboBox5.setPreferredSize(new java.awt.Dimension(364, 42));
 
+        jComboBox7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "khóa thẻ 1 tháng", "Khóa thẻ 2 tháng", "Khóa thẻ vĩnh viễn", "Bồi thường mất tài sản", "Khóa thẻ 1 tháng và bồi thường" }));
         jComboBox7.setPreferredSize(new java.awt.Dimension(364, 42));
 
+        jComboBox8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jComboBox8.setPreferredSize(new java.awt.Dimension(364, 42));
 
-        TextFieldSt1.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
+        TextFieldSt1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         TextFieldSt1.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         TextFieldSt1.setToolTipText("");
 
@@ -364,7 +357,7 @@ public class GUI_Processing extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(jComboBox8, 0, 1, Short.MAX_VALUE))
                     .addComponent(labelStatisticsFor5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,9 +403,9 @@ public class GUI_Processing extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
-        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -457,8 +450,8 @@ public class GUI_Processing extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -699,7 +692,6 @@ public class GUI_Processing extends javax.swing.JFrame {
     public javax.swing.JLabel labelStatisticsFor;
     public javax.swing.JLabel labelStatisticsFor1;
     public javax.swing.JLabel labelStatisticsFor10;
-    public javax.swing.JLabel labelStatisticsFor3;
     public javax.swing.JLabel labelStatisticsFor5;
     public javax.swing.JLabel labelStatisticsFor6;
     public javax.swing.JLabel labelStatisticsFor7;
