@@ -29,6 +29,7 @@ GUI\GUI_BorrowAndReturnDevice.class
 BUS\BUS_UsageInformation.class
 Entity\_Processing.class
 GUI\GUI_Processing$2.class
+Helper\Import.class
 GUI\GUI_JoinStudyArea$2.class
 GUI\GUI_Member$11.class
 GUI\GUI_UpdateMember.class

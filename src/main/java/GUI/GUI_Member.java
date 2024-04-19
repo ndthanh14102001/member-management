@@ -5,16 +5,20 @@
 package GUI;
 
 import BUS.BUS_Member;
-import DAO.DAO_Member;
 import Entity._Member;
+import Helper.Import;
 import java.awt.HeadlessException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.*;
 
 /**
  *
@@ -195,6 +199,68 @@ public class GUI_Member extends javax.swing.JFrame {
         displayDataInTable();
     }
 
+    public List<_Member> readExcelFile(String filePath) {
+        List<_Member> members = new ArrayList<>();
+
+        try {
+            FileInputStream file = new FileInputStream(new File(filePath));
+
+            // Tạo một Workbook từ FileInputStream
+            Workbook workbook = WorkbookFactory.create(file);
+
+            // Lấy Sheet đầu tiên từ Workbook
+            Sheet sheet = (Sheet) workbook.getSheetAt(0);
+
+            // Lấy Iterator cho tất cả các hàng trong Sheet
+            Iterator<Row> rowIterator = sheet.iterator();
+
+            // Bỏ qua hàng tiêu đề
+            if (rowIterator.hasNext()) {
+                rowIterator.next();
+            }
+
+            // Duyệt qua từng hàng và tạo đối tượng _Member
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                if (row.getCell(0) != null) {
+                    // Lấy dữ liệu từ các ô trong hàng
+                    String maTV = String.valueOf((int) row.getCell(0).getNumericCellValue());
+                    String hoTen = row.getCell(1).getStringCellValue();
+                    String khoa = row.getCell(2).getStringCellValue();
+                    String nganh = row.getCell(3).getStringCellValue();
+                    String sdt = row.getCell(4).getStringCellValue();
+
+                    String password = "";
+                    try {
+                        password = row.getCell(5).getStringCellValue();
+                    } catch (Exception e) {
+                        password = String.valueOf((int) row.getCell(5).getNumericCellValue());
+                    }
+                    String email = row.getCell(6).getStringCellValue();
+                    // Tạo đối tượng _Member và thêm vào danh sách
+                    _Member member = new _Member();
+                    member.setMaTV(maTV);
+                    member.setHoTen(hoTen);
+                    member.setKhoa(khoa);
+                    member.setNganh(nganh);
+                    member.setSdt(sdt);
+                    member.setEmail(email);
+                    member.setPassword(password);
+                    members.add(member);
+                }
+
+            }
+
+            // Đóng FileInputStream
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        return members;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -215,7 +281,7 @@ public class GUI_Member extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnImportExcel = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         txtMajors = new javax.swing.JTextField();
         txtDepartment = new javax.swing.JTextField();
@@ -296,10 +362,10 @@ public class GUI_Member extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Nhập bằng file Excel");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnImportExcel.setText("Nhập bằng file Excel");
+        btnImportExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnImportExcelActionPerformed(evt);
             }
         });
 
@@ -330,7 +396,7 @@ public class GUI_Member extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnUpdate)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnImportExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(264, 264, 264))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
@@ -394,7 +460,7 @@ public class GUI_Member extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDelete)
                     .addComponent(btnUpdate)
-                    .addComponent(jButton4)
+                    .addComponent(btnImportExcel)
                     .addComponent(btnAdd)
                     .addComponent(jButton2))
                 .addGap(14, 14, 14))
@@ -410,9 +476,31 @@ public class GUI_Member extends javax.swing.JFrame {
         GUI_UpdateMember.main(selectedMember);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnImportExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportExcelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        String filePath = new Import().selectFile(this);
+        if (filePath != "") {
+            List<_Member> members = readExcelFile(filePath);
+
+            try {
+                if (!members.isEmpty()) {
+                    int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn thêm " + members.size() + " thành viên", "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                    // Kiểm tra kết quả từ hộp thoại xác nhận
+                    if (result == JOptionPane.YES_OPTION) {
+                        new BUS.BUS_Member().addMembers(members);
+                        JOptionPane.showMessageDialog(null, "Thêm các thành viên thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        displayDataInTable();
+                    }
+
+                } else {
+                    throw new Exception("File không hợp lệ");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnImportExcelActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
@@ -490,9 +578,9 @@ public class GUI_Member extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnImportExcel;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

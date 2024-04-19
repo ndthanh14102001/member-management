@@ -140,6 +140,7 @@ public class DAO_Member {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
+            session.clear();
             throw e;
         } finally {
             session.clear();

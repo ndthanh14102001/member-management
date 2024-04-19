@@ -61,7 +61,7 @@ public class DAO_Device {
             for (_Device device : devices) {
                 device.Validate();
                 if (isMaTBExists(device.getMaTB())) {
-                    throw new Exception("Mã thiết bị đã tồn tại");
+                    throw new Exception("Mã thiết bị " + device.getMaTB() + " đã tồn tại");
                 }
                 session.save(device);
             }

@@ -6,14 +6,24 @@ package GUI;
 
 import Entity._Device;
 import Entity._Member;
+import Helper.Import;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  *
@@ -142,6 +152,53 @@ public class GUI_Device extends javax.swing.JFrame {
             }
 
         });
+    }
+
+    public List<_Device> readExcelFile(String filePath) {
+        List<_Device> devices = new ArrayList<>();
+
+        try {
+            FileInputStream file = new FileInputStream(new File(filePath));
+
+            // Tạo một Workbook từ FileInputStream
+            Workbook workbook = WorkbookFactory.create(file);
+
+            // Lấy Sheet đầu tiên từ Workbook
+            Sheet sheet = (Sheet) workbook.getSheetAt(0);
+
+            // Lấy Iterator cho tất cả các hàng trong Sheet
+            Iterator<Row> rowIterator = sheet.iterator();
+
+            // Bỏ qua hàng tiêu đề
+            if (rowIterator.hasNext()) {
+                rowIterator.next();
+            }
+
+            // Duyệt qua từng hàng và tạo đối tượng _Member
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                if (row.getCell(0) != null) {
+                    // Lấy dữ liệu từ các ô trong hàng
+                    String maTB = row.getCell(0).getStringCellValue();
+                    String tenTB = row.getCell(1).getStringCellValue();
+                    String moTA = row.getCell(2).getStringCellValue();
+
+                    _Device device = new _Device();
+                    device.setMaTB(maTB);
+                    device.setTenTB(tenTB);
+                    device.setMoTaTB(moTA);
+                    
+                    devices.add(device);
+                }
+            }
+
+            // Đóng FileInputStream
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return devices;
     }
 
     /**
@@ -455,6 +512,29 @@ public class GUI_Device extends javax.swing.JFrame {
 
     private void ButtonAddExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonAddExcelActionPerformed
         // TODO add your handling code here:
+        String filePath = new Import().selectFile(this);
+        if (filePath != "") {
+            List<_Device> devices = readExcelFile(filePath);
+
+            try {
+                if (!devices.isEmpty()) {
+                    int result = JOptionPane.showConfirmDialog(null, "Bạn có muốn thêm " + devices.size() + " thiết bị", "Confirmation", JOptionPane.YES_NO_OPTION);
+
+                    // Kiểm tra kết quả từ hộp thoại xác nhận
+                    if (result == JOptionPane.YES_OPTION) {
+                        new BUS.BUS_Device().addDevices(devices);
+                        JOptionPane.showMessageDialog(null, "Thêm các thiết bị thành công !", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                        displayDataInTable();
+                    }
+
+                }else {
+                    throw new Exception("File không hợp lệ");
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_ButtonAddExcelActionPerformed
 
     /**
