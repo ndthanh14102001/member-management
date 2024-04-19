@@ -143,7 +143,7 @@ public class GUI_Processing extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -323,7 +323,7 @@ public class GUI_Processing extends javax.swing.JFrame {
         labelStatisticsFor10.setText("Trạng thái xử lý");
 
         jComboBox5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chưa xử lý", "Đã xử lý" }));
         jComboBox5.setPreferredSize(new java.awt.Dimension(364, 42));
 
         jComboBox7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -513,9 +513,11 @@ public class GUI_Processing extends javax.swing.JFrame {
         String processingMethod = (String) jComboBox7.getSelectedItem();
         Date processingDate = borrowDateChooser.getDate();
         String amountString = TextFieldSt1.getText();
-        int amount;
+        int amount = 0;
         try {
-            amount = Integer.parseInt(amountString);
+            if (!"".equals(amountString) && amountString != null) {
+                amount = Integer.parseInt(amountString);
+            }
         } catch (NumberFormatException e) {
             // Người dùng đã nhập một chuỗi không thể chuyển đổi thành số nguyên
             // Hiển thị một thông báo cảnh báo và không thực hiện thêm xử lý
@@ -538,7 +540,10 @@ public class GUI_Processing extends javax.swing.JFrame {
         processing.setMaTV(new _Member(memberID));
         processing.setHinhThucXL(processingMethod);
         processing.setNgayXL(processingDate);
-        processing.setSoTien(amount);
+        if (amount != 0) {
+            processing.setSoTien(amount);
+        }
+
         processing.setTrangThaiXL(status);
 
         // Call the createProcess method
@@ -559,13 +564,19 @@ public class GUI_Processing extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        int amount = Integer.parseInt(TextFieldSt1.getText());
+        int amount = 0;
+        try {
+            amount = Integer.parseInt(TextFieldSt1.getText());
+        } catch (Exception e) {
+        }
         int status = jComboBox5.getSelectedIndex();
         int id = Integer.parseInt(enabledtext.getText());
         // Create a new _Processing object
         _Processing processing = new _Processing();
         // Set properties of the processing object
-        processing.setSoTien(amount);
+        if (!"".equals(TextFieldSt1.getText())) {
+            processing.setSoTien(amount);
+        }
         processing.setTrangThaiXL(status);
         processing.setMaXL(id);
 

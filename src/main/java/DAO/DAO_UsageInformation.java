@@ -10,6 +10,8 @@ import Entity._UsageInformation;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
@@ -186,11 +188,20 @@ public class DAO_UsageInformation {
                          SELECT t.maTB, t.tenTB
                          FROM _Device t
                          WHERE t.maTB NOT IN (
-                             SELECT u.maTB.maTB FROM _UsageInformation u
+                             SELECT u.maTB.maTB FROM _UsageInformation u 
+                             WHERE u.maTB.maTB IS NOT NULL
                          )""";
 
             Query<Object[]> query = session.createQuery(hql);
             results = query.getResultList();
+            Collections.sort(results, new Comparator<Object[]>() {
+                @Override
+                public int compare(Object[] obj1, Object[] obj2) {
+                    String maTB1 = (String) obj1[0];
+                    String maTB2 = (String) obj2[0];
+                    return maTB1.compareTo(maTB2);
+                }
+            });
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -383,7 +394,7 @@ public class DAO_UsageInformation {
         }
         hql.append(" ORDER BY u.tGVao DESC");
         Query<_UsageInformation> query = session.createQuery(hql.toString(), _UsageInformation.class);
-        
+
         query.setParameter("startTime", startTime);
         query.setParameter("endTime", endTime);
         if (hasDepartment) {
@@ -392,6 +403,31 @@ public class DAO_UsageInformation {
 
         if (hasMajors) {
             query.setParameter("nganh", "%" + majors + "%");
+        }
+        return query.getResultList();
+    }
+
+    public List<_UsageInformation> getBorrowedDeviceHistory(Date startTime, Date endTime, String deviceName) {
+        StringBuilder hql = new StringBuilder("FROM _UsageInformation u "
+                + "WHERE u.tGVao IS NULL "
+                + "AND u.tGMuon IS NOT NULL "
+                + "AND u.tGTra IS NOT NULL "
+                + "AND (:startTime IS NULL OR u.tGMuon >= :startTime) "
+                + "AND (:endTime IS NULL OR u.tGTra <= :endTime) ");
+        boolean hasDeviceName = !deviceName.isEmpty();
+
+        if (hasDeviceName) {
+            hql.append(" AND");
+            hql.append(" u.maTB.tenTB LIKE :tenTB");
+
+        }
+        hql.append(" ORDER BY u.tGMuon DESC");
+        Query<_UsageInformation> query = session.createQuery(hql.toString(), _UsageInformation.class);
+
+        query.setParameter("startTime", startTime);
+        query.setParameter("endTime", endTime);
+        if (hasDeviceName) {
+            query.setParameter("tenTB", "%" + deviceName + "%");
         }
         return query.getResultList();
     }

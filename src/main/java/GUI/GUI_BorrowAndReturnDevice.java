@@ -44,7 +44,7 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
         this.devices.clear();
         // Lấy dữ liệu từ bảng 1 và thêm vào model1
         List<Object[]> borrowAndReturnData = getDevicesData();
-
+        txtCountDevice.setText(String.valueOf(borrowAndReturnData.size()));
         if (borrowAndReturnData != null) {
             for (Object[] data : borrowAndReturnData) {
 
@@ -96,8 +96,10 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
         btnBorrow = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtCountDevice = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -146,6 +148,11 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton3.setText("Lịch sử mượn");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         btnRefresh.setBackground(new java.awt.Color(204, 204, 204));
         btnRefresh.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -155,6 +162,11 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
                 btnRefreshActionPerformed(evt);
             }
         });
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel2.setText("Số lượng thiết bị : ");
+
+        txtCountDevice.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,11 +178,15 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCountDevice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 829, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbSelectDeviceState, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(184, Short.MAX_VALUE)
                 .addComponent(btnRefresh)
                 .addGap(30, 30, 30)
                 .addComponent(btnBorrow)
@@ -189,7 +205,11 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
                 .addComponent(cbSelectDeviceState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCountDevice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnReturn)
                     .addComponent(jButton3)
@@ -225,6 +245,11 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Trả thiết bị thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnReturnActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new GUI_BorrowedDeviceHisotry().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,7 +293,9 @@ public class GUI_BorrowAndReturnDevice extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbSelectDeviceState;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbDevices;
+    private javax.swing.JLabel txtCountDevice;
     // End of variables declaration//GEN-END:variables
 }

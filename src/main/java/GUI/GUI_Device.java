@@ -61,7 +61,7 @@ public class GUI_Device extends javax.swing.JFrame {
         this.devices.clear();
         // Lấy dữ liệu từ bảng 1 và thêm vào model1
         List<_Device> deviceList = new BUS.BUS_Device().getAllDevices(txtFilterType.getText(), txtFilterYear.getText(), txtFilterMaTB.getText());
-
+        txtCountDevice.setText(String.valueOf(deviceList.size()));
         if (deviceList != null) {
             for (_Device device : deviceList) {
                 this.devices.add(device);
@@ -230,8 +230,10 @@ public class GUI_Device extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         ButtonEdit = new javax.swing.JButton();
         ButtonAddExcel = new javax.swing.JButton();
+        txtCountDevice = new javax.swing.JLabel();
+        LabelId4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -363,10 +365,29 @@ public class GUI_Device extends javax.swing.JFrame {
             }
         });
 
+        txtCountDevice.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        LabelId4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        LabelId4.setText("Số lượng thiết bị :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAdd)
+                .addGap(83, 83, 83)
+                .addComponent(ButtonEdit)
+                .addGap(86, 86, 86)
+                .addComponent(btnDelete)
+                .addGap(94, 94, 94)
+                .addComponent(ButtonAddExcel)
+                .addGap(217, 217, 217))
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,33 +407,24 @@ public class GUI_Device extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtFilterType, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(LabelId2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtMaTB, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(37, 37, 37)
-                            .addComponent(LabelNameDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtTenTB, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(LabelDescriptionDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtMoTaTB))))
-                .addContainerGap(61, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAdd)
-                .addGap(83, 83, 83)
-                .addComponent(ButtonEdit)
-                .addGap(86, 86, 86)
-                .addComponent(btnDelete)
-                .addGap(94, 94, 94)
-                .addComponent(ButtonAddExcel)
-                .addGap(217, 217, 217))
+                            .addComponent(txtMoTaTB))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(LabelId2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(LabelId4))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtCountDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtMaTB, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(37, 37, 37)
+                                    .addComponent(LabelNameDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtTenTB, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,7 +443,11 @@ public class GUI_Device extends javax.swing.JFrame {
                     .addComponent(txtFilterYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCountDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LabelId4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelId2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelNameDevice, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -447,7 +463,7 @@ public class GUI_Device extends javax.swing.JFrame {
                     .addComponent(ButtonEdit)
                     .addComponent(btnDelete)
                     .addComponent(ButtonAddExcel))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
@@ -590,6 +606,7 @@ public class GUI_Device extends javax.swing.JFrame {
     private javax.swing.JLabel LabelDescriptionDevice;
     private javax.swing.JLabel LabelId;
     private javax.swing.JLabel LabelId2;
+    private javax.swing.JLabel LabelId4;
     private javax.swing.JLabel LabelNameDevice;
     private javax.swing.JLabel LabelType;
     private javax.swing.JLabel LabelYear;
@@ -599,6 +616,7 @@ public class GUI_Device extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel labelTitle;
     private javax.swing.JTable tbDevices;
+    private javax.swing.JLabel txtCountDevice;
     private javax.swing.JTextField txtFilterMaTB;
     private javax.swing.JTextField txtFilterType;
     private javax.swing.JTextField txtFilterYear;

@@ -58,6 +58,10 @@ public class BUS_UsageInformation {
     public List<_UsageInformation> getStudyAreaHistory(Date startTime, Date endTime, String department, String majors) {
         return dao.getStudyAreaHistory(startTime, endTime, department, majors);
     }
+    
+    public List<_UsageInformation> getBorrowedDeviceHistory(Date startTime, Date endTime, String deviceName) {
+        return dao.getBorrowedDeviceHistory(startTime, endTime, deviceName);
+    }
 
     public List<Object[]> getNotAvailableDevices() {
         return dao.getNotAvailableDevices();

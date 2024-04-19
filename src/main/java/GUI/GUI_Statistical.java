@@ -30,7 +30,7 @@ public class GUI_Statistical extends javax.swing.JFrame {
         btnMember1 = new javax.swing.JButton();
         btnDevice = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Thống kê");
 
         btnViolate.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
