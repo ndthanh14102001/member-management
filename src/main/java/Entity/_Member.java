@@ -156,12 +156,13 @@ public class _Member implements Serializable {
     }
 
     public void checkMaTVFormat() throws Exception {
-        if (maTV == null || maTV.length() != 8) {
-            throw new Exception("Mã TV phải có độ dài 8 ký tự.");
+        if (maTV == null || maTV.length() != 10) {
+            throw new Exception("Mã TV phải có độ dài 10 ký tự.");
         }
         try {
-            Integer.parseInt(maTV);
+            Long.parseLong(maTV);
         } catch (NumberFormatException e) {
+            e.printStackTrace();
             throw new Exception("Mã thành viên phải là số.");
         }
     }

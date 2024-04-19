@@ -182,12 +182,14 @@ public class GUI_Device extends javax.swing.JFrame {
                     String maTB = row.getCell(0).getStringCellValue();
                     String tenTB = row.getCell(1).getStringCellValue();
                     String moTA = row.getCell(2).getStringCellValue();
-
+                    if (maTB.equals("")) {
+                        continue;
+                    }
                     _Device device = new _Device();
                     device.setMaTB(maTB);
                     device.setTenTB(tenTB);
                     device.setMoTaTB(moTA);
-                    
+
                     devices.add(device);
                 }
             }
@@ -555,7 +557,7 @@ public class GUI_Device extends javax.swing.JFrame {
                         displayDataInTable();
                     }
 
-                }else {
+                } else {
                     throw new Exception("File không hợp lệ");
                 }
 

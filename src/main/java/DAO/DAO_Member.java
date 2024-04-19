@@ -59,7 +59,7 @@ public class DAO_Member {
                     if (hasDepartment || hasMajors || hasMemberId) {
                         jpql.append(" AND");
                     }
-                    jpql.append(" SUBSTRING(m.maTV, 1, 4) = :year");
+                    jpql.append(" SUBSTRING(m.maTV, 3, 4) = :year");
                 }
             }
             jpql.append(" GROUP BY m");

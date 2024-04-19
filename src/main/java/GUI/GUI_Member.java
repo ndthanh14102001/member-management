@@ -201,9 +201,9 @@ public class GUI_Member extends javax.swing.JFrame {
 
     public List<_Member> readExcelFile(String filePath) {
         List<_Member> members = new ArrayList<>();
-
+        FileInputStream file;
         try {
-            FileInputStream file = new FileInputStream(new File(filePath));
+            file = new FileInputStream(new File(filePath));
 
             // Tạo một Workbook từ FileInputStream
             Workbook workbook = WorkbookFactory.create(file);
@@ -225,6 +225,9 @@ public class GUI_Member extends javax.swing.JFrame {
                 if (row.getCell(0) != null) {
                     // Lấy dữ liệu từ các ô trong hàng
                     String maTV = String.valueOf((int) row.getCell(0).getNumericCellValue());
+                    if (maTV.equals("0")) {
+                        continue;
+                    }
                     String hoTen = row.getCell(1).getStringCellValue();
                     String khoa = row.getCell(2).getStringCellValue();
                     String nganh = row.getCell(3).getStringCellValue();
